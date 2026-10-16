@@ -9,9 +9,14 @@ from typing import Any, Literal, Optional
 import numpy as np
 import pandas as pd
 
+from sasram.mcp import tool
 
+## download the data (this simulate an external database table)
+
+# URL to the SAS RAM Hackathon GitHub repository
 URL = "https://raw.githubusercontent.com/stepodo/sas-ram-hackathon/main/data/movie_database.csv"
 
+# load the csv file as pandas DataFrame
 movies_df: Optional[pd.DataFrame] = pd.read_csv(
     URL,
     dtype={
@@ -50,7 +55,7 @@ movies_df: Optional[pd.DataFrame] = pd.read_csv(
     },
 )
 
-
+## define control check and light guardrails
 ALLOWED_COLUMNS = {
     "name", "rating", "genre", "year", "released", "score", "votes",
     "director", "writer", "star", "country", "budget", "revenue", "company",
@@ -90,6 +95,7 @@ FILTER_OPERATORS = {
 }
 
 
+## define support functions
 def set_movies_dataframe(df: pd.DataFrame) -> dict[str, Any]:
     """Bind a live pandas DataFrame to the MCP server."""
     global movies_df
@@ -338,7 +344,7 @@ def _error(exc: Exception) -> dict[str, Any]:
         "data": [],
     }
 
-#@tool
+@tool
 def get_dataset_schema(sample_rows: int = 5) -> dict[str, Any]:
     """Return shape, data types, null rates, cardinality, ranges, and samples."""
     try:
@@ -381,7 +387,7 @@ def get_dataset_schema(sample_rows: int = 5) -> dict[str, Any]:
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def search_movies(
     name: Optional[str] = None,
     genre: Optional[str] = None,
@@ -447,7 +453,7 @@ def search_movies(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def get_movie(name: str, limit: int = 10) -> dict[str, Any]:
     """Return exact matches first, then case-insensitive partial matches."""
     try:
@@ -481,7 +487,7 @@ def get_movie(name: str, limit: int = 10) -> dict[str, Any]:
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def filter_movies(
     filters: Optional[list[dict[str, Any]]] = None,
     columns: Optional[list[str]] = None,
@@ -527,7 +533,7 @@ def filter_movies(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def rank_movies(
     metric: str,
     n: int = 10,
@@ -574,7 +580,7 @@ def rank_movies(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def aggregate_movies(
     group_by: list[str],
     metrics: list[dict[str, str]],
@@ -623,7 +629,7 @@ def aggregate_movies(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def compare_segments(
     dimension: str,
     metrics: Optional[list[str]] = None,
@@ -686,7 +692,7 @@ def compare_segments(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def analyze_release_timing(
     metric: str = "revenue",
     group_by: str = "release_month",
@@ -727,7 +733,7 @@ def analyze_release_timing(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def describe_metrics(
     columns: list[str],
     filters: Optional[list[dict[str, Any]]] = None,
@@ -763,7 +769,7 @@ def describe_metrics(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def correlation_analysis(
     columns: Optional[list[str]] = None,
     target: Optional[str] = None,
@@ -836,7 +842,7 @@ def correlation_analysis(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def detect_outliers(
     column: str,
     method: Literal["iqr", "zscore"] = "iqr",
@@ -908,7 +914,7 @@ def detect_outliers(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def distribution_analysis(
     column: str,
     group_by: Optional[str] = None,
@@ -983,7 +989,7 @@ def distribution_analysis(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def analyze_profitability(
     group_by: Optional[str] = None,
     filters: Optional[list[dict[str, Any]]] = None,
@@ -1071,7 +1077,7 @@ def analyze_profitability(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def find_sleeper_hits(
     max_budget: Optional[float] = None,
     min_roi: Optional[float] = None,
@@ -1146,7 +1152,7 @@ def find_sleeper_hits(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def find_box_office_bombs(
     min_budget: Optional[float] = None,
     max_roi: float = 0.0,
@@ -1235,7 +1241,7 @@ def _analyze_entity(
         _safe_limit(top_n, 100)
     )
 
-#@tool
+@tool
 def analyze_talent(
     role: Literal["director", "writer", "star"],
     person: Optional[str] = None,
@@ -1271,7 +1277,7 @@ def analyze_talent(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def analyze_companies(
     metric: str = "revenue",
     min_movies: int = 5,
@@ -1313,7 +1319,7 @@ def analyze_companies(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def analyze_genres(
     metric: str = "roi",
     year_from: Optional[int] = None,
@@ -1370,7 +1376,7 @@ def analyze_genres(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def analyze_countries(
     metric: str = "revenue",
     min_movies: int = 10,
@@ -1407,7 +1413,7 @@ def analyze_countries(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def analyze_trends(
     metric: str,
     time_grain: Literal[
@@ -1450,7 +1456,7 @@ def analyze_trends(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def data_quality_report() -> dict[str, Any]:
     """Report missingness, duplicates, invalid values, and year inconsistencies."""
     try:
@@ -1523,7 +1529,7 @@ def data_quality_report() -> dict[str, Any]:
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def missing_data_analysis(
     columns: Optional[list[str]] = None,
     group_by: Optional[str] = None,
@@ -1583,7 +1589,7 @@ def missing_data_analysis(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def create_chart(
     chart_type: Literal[
         "bar", "line", "scatter", "histogram", "box", "heatmap"
@@ -1726,7 +1732,7 @@ def create_chart(
     except Exception as exc:
         return _error(exc)
 
-#@tool
+@tool
 def answer_movie_analysis(question: str) -> dict[str, Any]:
     """Return a safe routing plan for a natural-language question."""
     try:
