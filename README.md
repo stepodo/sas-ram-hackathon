@@ -24,17 +24,93 @@ Along the way, you will **experiment, evaluate, and improve** different versions
 
 By the end of the challenge, CineAgent won't just know about movies. **It will be ready to help you imagine the next one**.
 
+
+
+Are you ready? Let's start!
+
 ##### 
 
-##### The Sources
+##### SAS Retrieval Agent Manager
 
 
+
+In this challenge, you will build **CineAgent using** **SAS Retrieval Agent Manager**.
+
+
+
+###### Software Overview
+
+SAS Retrieval Agent Manager provides the environment you will use throughout the challenge to turn movie knowledge into an AI-powered agent. You will progressively build CineAgent, starting with document-based knowledge and then extending the agent with tools that can access structured movie data.
+
+
+
+For more information about SAS Retrieval Agent Manager and training courses on this solution, please visit out official web pages:
+
+* Official Webpage: https://www.sas.com/en\_us/software/retrieval-agent-manager.html
+* SAS Help Center for SAS RAM: https://go.documentation.sas.com/doc/en/ragntmgrcdc/v\_013/ragntmgrug/titlepage.htm?fromDefault=
+* SAS Learning Portal: https://learn.sas.com/
+
+
+
+###### How to access
 
 \[...]
 
 
 
-##### 
+\_\_\_
+
+##### The Sources
+
+
+
+The first step is to make our movie knowledge available in **SAS Retrieval Agent Manager (RAM)**.
+
+
+
+In the **documents** folder of this repository, you will find two files:
+
+* movies\_success\_guidelines.txt: contains guidelines and key principles for developing and evaluating a successful movie, covering areas such as story, audience, production, economics, marketing, and distribution. 
+* movies\_summary.pdf: contains movie titles and their corresponding plot summaries.
+
+
+
+Download both files. We will use them to create **two separate Sources** in SAS Retrieval Agent Manager.
+
+
+
+**Create your first Source**
+
+
+
+In SAS Retrieval Agent Manager, click **Sources**, then select **Local Files**.
+
+
+
+A Source is where we will store the documents that provide knowledge to CineAgent. For this challenge, we will keep the two types of knowledge separate by creating **two Sources**:
+
+* One for movies\_summary
+* One for movies\_success\_guidelines
+
+
+
+For each Source, provide a **Name** and a **Description**. Feel free to choose your own, or use the following examples:
+
+**Movie Summaries:** This Source contains movie summaries.
+
+**Movie Success Guidelines:** This Source contains guidelines for developing and evaluating a successful movie.
+
+
+
+Upload the corresponding file to each Source.
+
+
+
+**Why two Sources?** Keeping the documents separate will allow us to build and experiment with two distinct knowledge bases in the next steps.
+
+
+
+\_\_\_
 
 ##### The Collections
 
