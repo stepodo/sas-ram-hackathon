@@ -30,7 +30,7 @@ Are you ready? Let's start!
 
 ##### 
 
-##### SAS Retrieval Agent Manager
+### SAS Retrieval Agent Manager
 
 
 
@@ -38,7 +38,7 @@ In this challenge, you will build **CineAgent using** **SAS Retrieval Agent Mana
 
 
 
-###### Software Overview
+#### Software Overview
 
 SAS Retrieval Agent Manager provides the environment you will use throughout the challenge to turn movie knowledge into an AI-powered agent. You will progressively build CineAgent, starting with document-based knowledge and then extending the agent with tools that can access structured movie data.
 
@@ -52,15 +52,15 @@ For more information about SAS Retrieval Agent Manager and training courses on t
 
 
 
-###### How to access
+#### How to access
 
 \[...]
 
 
 
-\_\_\_
 
-##### The Sources
+
+### The Sources
 
 
 
@@ -79,9 +79,7 @@ Download both files. We will use them to create **two separate Sources** in SAS 
 
 
 
-**Create your first Source**
-
-
+#### Create your first Source
 
 In SAS Retrieval Agent Manager, click **Sources**, then select **Local Files**.
 
@@ -110,19 +108,9 @@ Upload the corresponding file to each Source.
 
 
 
-\_\_\_
-
-##### The Collections
 
 
-
-\[...]
-
-
-
-
-
-##### The Agent
+### The Collections
 
 
 
@@ -132,7 +120,7 @@ Upload the corresponding file to each Source.
 
 
 
-##### The MCP Server
+### The Agent
 
 
 
@@ -140,7 +128,17 @@ Upload the corresponding file to each Source.
 
 
 
-###### MCP tool descriptions
+
+
+### The MCP Server
+
+
+
+\[...]
+
+
+
+##### MCP tool descriptions
 
 The code defines **25** functions decorated with '@tool'.
 
@@ -148,7 +146,7 @@ Below is a description of each tool, grouped by purpose and based on its actual 
 
 
 
-1\. Dataset discovery and movie retrieval
+###### 1\. Dataset discovery and movie retrieval
 
 * **get\_dataset\_schema**: Returns an overview of the movie dataset, including its number of rows and columns, column names, data types, missing-value counts and percentages, and number of distinct values. It also provides minimum and maximum values for numeric columns and a sample of the first records. The sample defaults to 5 rows and is capped at 20.
 * **search\_movies**: Searches for movies using case-insensitive partial matches on title, genre, director, writer, star, company, country, and content rating. It can also restrict results to an inclusive year range, using 'release\_year' when available and otherwise 'year'. All supplied criteria are combined with AND logic. Returns matching movie records, the total match count, and the applied filters.
@@ -158,7 +156,7 @@ Below is a description of each tool, grouped by purpose and based on its actual 
 
 
 
-2\. Aggregation and segment comparison
+###### 2\. Aggregation and segment comparison
 
 * **aggregate\_movies**: Calculates one or more summary metrics across the full dataset or within groups defined by one or more columns. Supported aggregations are 'count', 'nunique', 'sum', 'mean', 'median', 'min', 'max', and 'std'. Each metric can have a custom output alias. Supports filtering, sorting by an aggregated output column, and limiting the returned groups. Passing an empty 'group\_by' list produces an overall summary.
 * **compare\_segments**: Compares categories of a selected dimension, such as genre, country, or company. For each category, returns a movie count and the median and mean of the requested metrics. The default metrics are revenue, profit, ROI, and score. Categories are ranked by movie count—not by financial performance—and the largest categories are returned.
@@ -167,7 +165,7 @@ Below is a description of each tool, grouped by purpose and based on its actual 
 
 
 
-3\. Statistical exploration
+###### 3\. Statistical exploration
 
 * **describe\_metrics**: Returns descriptive statistics for selected columns after optional filtering. Converts values to numeric and reports the non-missing count, mean, standard deviation, minimum, maximum, requested percentiles, and missing-value count. The default percentiles are the 25th, 50th, and 75th percentiles; values that cannot be converted to numeric are counted as missing.
 * **correlation\_analysis**: Calculates Pearson, Spearman, or Kendall correlations between selected numeric columns. Without a target, returns the full correlation matrix. With a target, returns the other variables ranked by the absolute magnitude of their correlation with that target, while preserving each coefficient’s sign. It operates on the full dataset and does not accept filters. The output explicitly warns that association is not evidence of causation.
@@ -176,7 +174,7 @@ Below is a description of each tool, grouped by purpose and based on its actual 
 
 
 
-4\. Financial performance
+###### 4\. Financial performance
 
 * **analyze\_profitability**: Summarizes financial performance for the selected movies, either overall or by category. Returns movie count, median budget, median revenue, median profit, the median of a selected metric—ROI by default—and the percentage of movies  with positive profit. Supports structured filters and additional minimum-budget and minimum-vote thresholds. The profitable percentage uses only records with a non-missing numeric profit value.
 * **find\_sleeper\_hits**: Finds movies meeting caller-defined budget, ROI, revenue, and vote thresholds, then ranks them by ROI in descending order. Always requires a positive budget and a non-missing ROI. Returns identifying information and financial metrics. Despite its name, it does not impose a low-budget or high-ROI threshold unless the caller supplies one.
@@ -184,7 +182,7 @@ Below is a description of each tool, grouped by purpose and based on its actual 
 
 
 
-5\. Talent, company, genre, and country analysis
+###### 5\. Talent, company, genre, and country analysis
 
 The following tools share a common aggregation routine. Their standard output includes movie count, the median and mean of the selected metric, total revenue, median ROI, and median score. Entities are ranked by the median of the selected metric.
 
@@ -195,14 +193,14 @@ The following tools share a common aggregation routine. Their standard output in
 
 
 
-6\. Data quality and missing values
+###### 6\. Data quality and missing values
 
 * **data\_quality\_report**: Audits the dataset for missing values, fully duplicated rows, repeated movie names, non-numeric values in expected numeric columns, zero or negative budgets and revenues, and disagreements between 'year' and 'release\_year'. Returns counts and missing-value percentages without modifying the data. The repeated-name check counts every row belonging to a duplicated title, not just the extra occurrences.
 * **missing\_data\_analysis**: Reports missing-value counts and percentages for selected columns, either across the full dataset or separately by a grouping column. If no columns are specified, analyzes all columns. It measures missingness without replacing or imputing missing values and does not treat missing financial values as zero.
 
 
 
-7\. Visualization and question routing
+###### 7\. Visualization and question routing
 
 * **create\_chart**: Creates a bar chart, line chart, scatter plot, histogram, box plot, or correlation heatmap. Supports structured filters, optional grouping through color, and optional aggregation before plotting. Returns the chart as a Base64-encoded PNG, the number of rows used, and up to 200 rows of the data supplied to the plotting code. When 'top\_n' is provided, it sorts and limits the data before plotting. Otherwise, datasets larger than 5,000 rows are reproducibly sampled down to 5,000 rows. The heatmap displays correlations between the numeric columns supplied through 'x', 'y', and 'color'; it is not a general pivot-table heatmap.
 * **answer\_movie\_analysis**: Suggests analytical tools for a natural-language question using simple, case-insensitive English keyword matching. It can recommend search, ranking, comparison, trend, correlation, release-timing, or profitability tools. If no keywords match, it recommends schema discovery, filtering, and aggregation. It returns only a routing recommendation: it does not execute the suggested tools, extract their arguments, or answer the analytical question itself.
