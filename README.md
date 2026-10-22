@@ -46,9 +46,9 @@ SAS Retrieval Agent Manager provides the environment you will use throughout the
 
 For more information about SAS Retrieval Agent Manager and training courses on this solution, please visit out official web pages:
 
-* Official Webpage: https://www.sas.com/en\_us/software/retrieval-agent-manager.html
-* SAS Help Center for SAS RAM: https://go.documentation.sas.com/doc/en/ragntmgrcdc/v\_013/ragntmgrug/titlepage.htm?fromDefault=
-* SAS Learning Portal: https://learn.sas.com/
+* [Official Webpage](https://www.sas.com/en_us/software/retrieval-agent-manager.html)
+* [SAS Help Center for SAS RAM](https://go.documentation.sas.com/doc/en/ragntmgrcdc/v_013/ragntmgrug/titlepage.htm?fromDefault=)
+* [SAS Learning Portal](https://learn.sas.com/) 
 
 
 
@@ -70,7 +70,7 @@ The first step is to make our movie knowledge available in **SAS Retrieval Agent
 
 In the **documents** folder of this repository, you will find two files:
 
-* movies\_success\_guidelines.txt: contains guidelines and key principles for developing and evaluating a successful movie, covering areas such as story, audience, production, economics, marketing, and distribution. 
+* movies\_success\_guidelines.txt: contains guidelines and key principles for developing and evaluating a successful movie, covering areas such as story, audience, production, economics, marketing, and distribution.
 * movies\_summary.pdf: contains movie titles and their corresponding plot summaries.
 
 
@@ -94,9 +94,8 @@ A Source is where we will store the documents that provide knowledge to CineAgen
 
 For each Source, provide a **Name** and a **Description**. Feel free to choose your own, or use the following examples:
 
-**Movie Summaries:** This Source contains movie summaries.
-
-**Movie Success Guidelines:** This Source contains guidelines for developing and evaluating a successful movie.
+* **Movie Summaries:** This Source contains movie summaries.
+* **Movie Success Guidelines:** This Source contains guidelines for developing and evaluating a successful movie.
 
 
 
@@ -114,94 +113,295 @@ Upload the corresponding file to each Source.
 
 
 
-\[...]
+Once the two sources were created, we need to create the vectorized tables that will be used by the RAG system.
+
+
+
+In the left panel, click **Collections** and then click **Create a Collection**. You are going to create two collections, one per each Sources we created before.
+
+* **Movie Summaries Knowledge**: This collection contains a document that has one paragraph per each movie. The paragraph as a three level structure: MOVIE\_ID, TITLE, SUMMARY.
+* **Movie Success Guidelines Knowledge**: This collection contains a document that has suggestions and guidelines to follow to write a successful movie.
+
+
+
+Once the two collections are ready, click the **Movie Summaries Knowledge**; the collection is empty, you are going to deploy your first RAG configuration.
+
+
+
+#### Setup a Collection Configuration
+
+Click **Create a new configuration**.
+
+
+
+In the Basics tab:
+
+* Specify a Name and a Description (for instance: test 1.0, RAG benchmark) for your configuration.
+* Specify the **Embedding model** (please, specify a multilingual model if you are planning to ask the agent questions in multiple languages).
+* Select **PostgreSQL** as the **Destination**.
+* In **Configuration update strategy** select **Append and sync**
+
+
+
+In the Settings tab:
+
+* Specify a **Chunk size** \[xxx]
+* Specify the **Chunk overlap** \[xxx]
+
+
+
+Click **Save**.
+
+
+
+Click the **Play button** a the right of the screen to initialize the execution of the RAG process.
+
+
+
+Feel free to prepare multiple configurations for your collection by changing the Chunk size and the Chunk overlap. You can setup a new configuration during the initialization process of another one.
+
+
+
+Repeat the process, following the same logics, for the **Movie Success Guidelines Knowledge** collection.
+
+Create at least two or three configurations per each collection.
+
+
+
+#### Retrieval Settings
+
+Once all configurations have completed the Vectorization Status, you need to evaluate the RAG performance of each of them in order to select the champion model.
+
+To do this we need to:
+
+1. Provide the RAG system a description of the future purpose of our use case
+2. Sample questions with a known answer we can use to evaluate model performance
+
+
+
+In the left panel, click **Retrieval Settings**.
+
+SAS provides six standard retrieval settings: **Concise**, **Context**, **Default**, **Detailed** and **Summary**. However, you are going to build dedicated ones.
+
+* Click the **New** button a the top right of the window
+* Provide a N**ame** to your custom retrieval setting: write **Movie Guidelines Prompt**
+* In the GitHub repository, navigate the content of the *retrieval\_settings* folder and copy the content of **movie\_guideline\_collection.txt**
+* Paste the content in the **System prompt template** replacing the default prompt
+* Leave all other settings as default
+* Click **Save**
+
+
+
+Repeat the same process for the Movie Summary Knowledge collection by coping and pasting the content of the **movie\_summary\_collection.txt** file. Name the custom retrieval setting as **Movie Summary Prompt**.
+
+
+
+#### Evaluation Tests (collections)
+
+In the left panel, click **Evaluation Tests**. Now you are going to implement a series of questions with known answers to evaluate the RAG system
+
+* Click **Create an evaluation test**
+* Provide a **Name** (for instance Movie Guideline Test) and a Description.
+* Leave Passing threshold to 100%
+* In the GitHub repository navigate the content of the *evaluation\_tests* folder and download the **movie\_guidelines\_evaluation.xlsx** file. Use the columns Question, Metric and Condition to build the question inside the SAS RAM
+* Click **Create test case**
+* Paste the content of the column Question in the **Prompt**, check **Metric** match and paste the corresponding **Value**.
+* When multiple assertions are required, click the **New Assertion button** and follow the order in the Metric and Condition "n" columns in the Excel file.
+
+
+
+Repeat the process with the content of the **movie\_summary\_evaluation.xlsx** file.
+
+
+
+Go back to the Collections window:
+
+* Click one of the two collection you built
+* Click the **LLMs** tab
+* Move the LLM model you prefer on the right panel (click the **arrow button**).
+* Once the model is listed on the right, please remember to specify in Retrieval Settings the right custom retrieval setting you created.
+* Specify the model as the Eval LLM model (menu at the bottom of the right panel).
+* Remember to click the **Save button** a the top right of the window.
+
+
+
+Now you are ready to run the evaluation tests:
+
+* Click the **User Eval** tab
+* Select all configurations you built in this collection
+* Select the right test in the **Test** tab.
+* Click **Ok**
+
+
+
+Once the execution is completed, you can display the results in the **Summary** tab. Select the best model as the champion model of your collection using the **Configuration Status** menu.
+
+
+
+Repeat this process for the other collection you built.
 
 
 
 
 
-### The Agent
+### Chat
 
 
 
-\[...]
+The RAG implementation is completed! 
+
+In the left panel, click **Chat**, then keep the selection to the **Collection** tab.
+
+Select the champion configuration in the Movie Success Guidelines Knowledge collection and query the RAG system (for instance: C*iao, quali sono i segreti per un film di successo?*)
+
+You can repeat the same test with the champion configuration from the Movie Summaries Knowledge (for instance: *Ciao, cosa sai del film di Eminem 8 Mile?*)
+
+
+
+Technically speaking, this is not an agent, but just the RAG at works!
+
+
+
+Now is time to build your CineAgent!
 
 
 
 
 
-### The MCP Server
+### The Agent (Experiment 1)
 
 
 
-\[...]
+To deploy the first experiment of the CineAgent, you need:
+
+1. An appropriate System Prompt
+2. Give the agent the possibility to explore the content of the two RAG systems you built
 
 
 
-##### MCP tool descriptions
+In the left panel, click **Agents**
 
-The code defines **25** functions decorated with '@tool'.
-
-Below is a description of each tool, grouped by purpose and based on its actual implementation.
-
-
-
-###### 1\. Dataset discovery and movie retrieval
-
-* **get\_dataset\_schema**: Returns an overview of the movie dataset, including its number of rows and columns, column names, data types, missing-value counts and percentages, and number of distinct values. It also provides minimum and maximum values for numeric columns and a sample of the first records. The sample defaults to 5 rows and is capped at 20.
-* **search\_movies**: Searches for movies using case-insensitive partial matches on title, genre, director, writer, star, company, country, and content rating. It can also restrict results to an inclusive year range, using 'release\_year' when available and otherwise 'year'. All supplied criteria are combined with AND logic. Returns matching movie records, the total match count, and the applied filters.
-* **get\_movie**: Retrieves movie records by title, placing case-insensitive exact matches before partial matches. Records appearing in both sets are deduplicated by their DataFrame index. Returns all available fields for each selected movie, with 10 results by default and a maximum of 50.
-* **filter\_movies**: Retrieves movie records using structured filter conditions. Supports equality, inequality, numeric comparisons, inclusive ranges, list membership, case-insensitive substring matching, and missing-value checks. It can select specific output columns, sort the results, and limit the number of returned records. Multiple filters are combined with AND logic.
-* **rank\_movies**: Ranks movies by a selected numeric metric, such as revenue, score, budget, profit, or ROI, after applying optional filters. It excludes records whose ranking metric cannot be interpreted as numeric or is missing. Results are sorted from highest to lowest by default; ascending order produces a bottom-ranked list. Returns the movie title, release year, genre, and selected metric where available.
+* Click Create an Agent
+* Specify CineAgent as the agent Name, write a description. Leave System Prompt and Chat initializer command empty (the default)
+* Click Add Agent Experiment
 
 
 
-###### 2\. Aggregation and segment comparison
+In Details tab:
 
-* **aggregate\_movies**: Calculates one or more summary metrics across the full dataset or within groups defined by one or more columns. Supported aggregations are 'count', 'nunique', 'sum', 'mean', 'median', 'min', 'max', and 'std'. Each metric can have a custom output alias. Supports filtering, sorting by an aggregated output column, and limiting the returned groups. Passing an empty 'group\_by' list produces an overall summary.
-* **compare\_segments**: Compares categories of a selected dimension, such as genre, country, or company. For each category, returns a movie count and the median and mean of the requested metrics. The default metrics are revenue, profit, ROI, and score. Categories are ranked by movie count—not by financial performance—and the largest categories are returned.
-* **analyze\_release\_timing**: Summarizes a selected metric across an existing release-calendar dimension, such as release month, quarter, week, day of week, or the weekend, summer, awards-season, and holiday-season flags. Returns a movie count and the chosen statistic for each group, sorted by the calendar dimension. By default, it calculates median revenue by release month. It uses the dataset’s existing calendar fields rather than deriving them.
-* **analyze\_trends**: Aggregates a selected metric by year, release year, release month, or release quarter, optionally adding a second grouping dimension such as genre or country. Returns a movie count and a selected summary statistic, ordered by the time dimension. This is descriptive aggregation rather than forecasting. Grouping only by month or quarter pools those periods across years.
+* As experiment Name write Experiment 1
+* In System Prompt paste the content of the file cineagent\_experiment\_1.txt file stored in the GitHub repository under the folder retrieval\_settings
 
 
 
-###### 3\. Statistical exploration
+In LLMs tab:
 
-* **describe\_metrics**: Returns descriptive statistics for selected columns after optional filtering. Converts values to numeric and reports the non-missing count, mean, standard deviation, minimum, maximum, requested percentiles, and missing-value count. The default percentiles are the 25th, 50th, and 75th percentiles; values that cannot be converted to numeric are counted as missing.
-* **correlation\_analysis**: Calculates Pearson, Spearman, or Kendall correlations between selected numeric columns. Without a target, returns the full correlation matrix. With a target, returns the other variables ranked by the absolute magnitude of their correlation with that target, while preserving each coefficient’s sign. It operates on the full dataset and does not accept filters. The output explicitly warns that association is not evidence of causation.
-* **detect\_outliers**: Identifies unusually low or high values in a selected numeric column after optional filtering. Supports two methods: iqr that flags observations below \\(Q\_1 - 1.5\\,IQR\\) or above \\(Q\_3 + 1.5\\,IQR\\) and 'zscore' that flags observations with an absolute z-score of at least 3. Returns the thresholds, total outlier count, and selected movie records ranked by an outlier score. For IQR, that score is absolute distance from the median; for z-score, it is the absolute z-score.
-* **distribution\_analysis**: Calculates histogram bin boundaries and observation counts for a numeric column, optionally producing a separate histogram for each category of another column. Supports filtering and between 2 and 100 bins. Returns histogram data rather than an image. When grouped, bin boundaries are calculated independently for each category, so they are not necessarily aligned across groups.
+* Specify the model you prefer
 
 
 
-###### 4\. Financial performance
+In Collections tab:
 
-* **analyze\_profitability**: Summarizes financial performance for the selected movies, either overall or by category. Returns movie count, median budget, median revenue, median profit, the median of a selected metric—ROI by default—and the percentage of movies  with positive profit. Supports structured filters and additional minimum-budget and minimum-vote thresholds. The profitable percentage uses only records with a non-missing numeric profit value.
-* **find\_sleeper\_hits**: Finds movies meeting caller-defined budget, ROI, revenue, and vote thresholds, then ranks them by ROI in descending order. Always requires a positive budget and a non-missing ROI. Returns identifying information and financial metrics. Despite its name, it does not impose a low-budget or high-ROI threshold unless the caller supplies one.
-* **find\_box\_office\_bombs**: Finds movies with a positive budget and an ROI at or below a selected threshold, which defaults to zero. An optional minimum budget can restrict the search to larger productions. Results are sorted by profit in ascending order, placing the lowest-profit records first. Returns identifying information, budget, revenue, profit, and ROI.
-
-
-
-###### 5\. Talent, company, genre, and country analysis
-
-The following tools share a common aggregation routine. Their standard output includes movie count, the median and mean of the selected metric, total revenue, median ROI, and median score. Entities are ranked by the median of the selected metric.
-
-* **analyze\_talent**: Summarizes movie-level performance by director, writer, or star. Can search for a specific person using a case-insensitive partial name match, apply filters, and require a minimum number of movies. Defaults to ranking people by median revenue with at least 3 movies. These are aggregates of associated movie records, not estimates of an individual’s causal contribution.
-* **analyze\_companies**: Summarizes movie-level performance by company after optional filtering. Excludes companies below a specified minimum movie count and ranks the remaining companies by the median of the selected metric. Defaults to revenue, at least 5 movies per company, and the top 20 companies.
-* **analyze\_genres**: Compares genres using the shared entity-level summary metrics. Supports inclusive release-year bounds and a minimum movie count per genre. Defaults to ranking genres by median ROI, requiring at least 10 movies per genre, and returning up to 100 genres.
-* **analyze\_countries**: Compares countries using the shared entity-level summary metrics. Defaults to ranking countries by median revenue, requiring at least 10 movies per country, and returning the top 20. Unlike the talent and company tools, it does not expose a general filtering parameter.
+* Move the two collections you built on the right panel
+* Click **Save**
 
 
 
-###### 6\. Data quality and missing values
-
-* **data\_quality\_report**: Audits the dataset for missing values, fully duplicated rows, repeated movie names, non-numeric values in expected numeric columns, zero or negative budgets and revenues, and disagreements between 'year' and 'release\_year'. Returns counts and missing-value percentages without modifying the data. The repeated-name check counts every row belonging to a duplicated title, not just the extra occurrences.
-* **missing\_data\_analysis**: Reports missing-value counts and percentages for selected columns, either across the full dataset or separately by a grouping column. If no columns are specified, analyzes all columns. It measures missingness without replacing or imputing missing values and does not treat missing financial values as zero.
+You can start the Development Server to test your Experiment 1 (please note you need to click on **Open Chat**). For instance, try ask something like *Ciao, vorrei sviluppare un nuovo film western. Suggeriscimi una trama e analizza quali tematiche e quale periodo di uscita potrebbero contribuire a massimizzarne il ROI.* 
 
 
 
-###### 7\. Visualization and question routing
+Once you have obtained the answer, click on the **Detail view** button to access the behind the scenes operations. You can see the original position of the chunks the agent retrieved from the RAG systems.
 
-* **create\_chart**: Creates a bar chart, line chart, scatter plot, histogram, box plot, or correlation heatmap. Supports structured filters, optional grouping through color, and optional aggregation before plotting. Returns the chart as a Base64-encoded PNG, the number of rows used, and up to 200 rows of the data supplied to the plotting code. When 'top\_n' is provided, it sorts and limits the data before plotting. Otherwise, datasets larger than 5,000 rows are reproducibly sampled down to 5,000 rows. The heatmap displays correlations between the numeric columns supplied through 'x', 'y', and 'color'; it is not a general pivot-table heatmap.
-* **answer\_movie\_analysis**: Suggests analytical tools for a natural-language question using simple, case-insensitive English keyword matching. It can recommend search, ranking, comparison, trend, correlation, release-timing, or profitability tools. If no keywords match, it recommends schema discovery, filtering, and aggregation. It returns only a routing recommendation: it does not execute the suggested tools, extract their arguments, or answer the analytical question itself.
+
+
+#### Evaluation Tests (agent)
+
+Now it is time to evaluate the performance of the agent.
+
+Following the same strategy adopted for the collections, you are going to create a test in the **Evaluation Tests** window. 
+
+Test questions are listed in the Excel file named **cineagent\_evaluation.xlsx** available in the *evaluation\_tests* folder inside the GitHub repository.
+
+
+
+### The Model Context Protocol (MCP) Server
+
+
+
+The Experiment 1 works, but you are not leveraging all the information you have access to. Indeed, you have access to structured cinematic data (a table in a database) that contains useful information. 
+
+The table (available as CSV file in the GitHub repository) has:
+
+* Number of columns:
+* Number of rows:
+
+
+
+To provide access to this structure source of information, you are going to build a custom MCP Server inside SAS RAM.
+
+
+
+In the GitHub Repository:
+
+* Download the **run.py**, the **README.md** file and the **requirements.txt** file inside code\_templates/code\_mcp\_server folder.
+
+
+
+In SAS RAM:
+
+* In the left panel, click on **Code Templates**
+* Click on **Code MCP Server**
+* As **Name**, write cineagent\_mcp\_tools. **Description**: List of custom MCP tools for the CineAgent project.
+* In the code tab, click Browse, than load the three files you downloaded from GitHub. The file run.py contains the Python code behind the custom MCP server. Multiple MCP servers are also available out-of-the-box and they do not require such a complicated development.
+* Click **Ok**
+* Click the Publish button at the top right corner of the screen. Click Ok. Your code is now ready to be embedded in a MCP server!
+* In the left panel, click on **MCP Tools**
+* Click the New button
+* As Name specify CineAgent MCP Server, description: MCP server for the CineAgent Project
+* Select Custom as Tool server type
+* Select cineagent\_mcp\_tools, then select the version (blue button) in the right panel. You should have just one version published.
+* Click Finish
+* By default the MCP server is stopped, click the MCP server then click the play button to execute it
+* Check if Server Status is Running and Ping Status is Connected. If so, the MCP server deployment is completed.
+
+
+
+Now you are ready to build a more complicated agent that has also access to the data via the MCP tools you just deployed!
+
+
+
+### The Agent (Experiment 2)
+
+
+
+Follow the same process reported in the section The Agent (Experiment 1). However:
+
+* The Name of the Agent Experiment this time is Experiment 2
+* This agent has its dedicated System Prompt, paste it from the file **cineagent\_experiment\_2.txt** stored in the folder *retrieval\_settings* in the GitHub repository.
+* In the tool tab, move all the MCP tools you just built on the right panel, so the agent can access them.
+
+
+
+You can test the Experiment 2 performance using the same set of questions implemented before.
+
+
+
+Post the same question you tried for the Experiment 1, now you should see the agent answering some of your requests using the MCP tools you built.
+
+
+
+Once you are confident with agent performance, you can select the champion agent experiment by selection Champion in the Status column and start the Agent Server. Now the agent can be used in the Chat window (left panel) or deployed in a custom infrastructure using the SAS RAM API.
+
+
+
+**Congratulation! You have completed the SAS RAM Hackathon Challenge!**
+
+**Please, if you want, feel free to continue to test different Collections, Agents and MCP tools configuration!**
+
+
+
+
+
+&#x20;
 
