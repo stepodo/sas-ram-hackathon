@@ -1,10 +1,10 @@
-# The CineAgent
+# CineAgent
 
-## Building an AI Agent to Analyze Movies and Craft Stories Across Every Genre
+## Building an AI Agent to Analyze Movies and Create New Movie Stories
 
 
 
-Welcome to the **SAS RAM Hackathon**!
+Welcome to the **SAS Retrieval Agent Manager Hackathon**!
 
 In this challenge, you will build an AI agent with one mission: **understand movies and use that knowledge to help create new ones**.
 
@@ -14,21 +14,23 @@ Your CineAgent will work with different kinds of movie knowledge. It will explor
 
 
 
-Throughout this guide, you will build CineAgent **step by step**. You will start by creating and evaluating its knowledge base using **Retrieval-Augmented Generation (RAG)**. Then, you will extend the agent with **MCP tools**, giving it access to structured movie data and allowing you to explore a richer set of questions and tasks.
+Throughout this guide, you will build CineAgent **step by step**. You will start by creating and evaluating its document-based knowledge base using **Retrieval-Augmented Generation (RAG)**. Then, you will extend the agent capabilities with **MCP tools**, giving it access to structured movie data and allowing you to explore a richer set of questions and tasks.
 
 
 
-Along the way, you will **experiment, evaluate, and improve** different versions of the agent until you are ready to deploy your champion.
+Along the way, you will **experiment, evaluate, and improve** different versions of the agent until you are ready to select your champion.
 
 
 
-By the end of the challenge, CineAgent won't just know about movies. **It will be ready to help you imagine the next one**.
+By the end of the challenge, CineAgent will not just know about movies. **It will be ready to help you imagine the next one**.
 
 
 
 Are you ready? Let's start!
 
-##### 
+
+
+
 
 ### SAS Retrieval Agent Manager
 
@@ -38,13 +40,19 @@ In this challenge, you will build **CineAgent using** **SAS Retrieval Agent Mana
 
 
 
-#### Software Overview
-
-SAS Retrieval Agent Manager provides the environment you will use throughout the challenge to turn movie knowledge into an AI-powered agent. You will progressively build CineAgent, starting with document-based knowledge and then extending the agent with tools that can access structured movie data.
+#### Software overview
 
 
 
-For more information about SAS Retrieval Agent Manager and training courses on this solution, please visit out official web pages:
+SAS Retrieval Agent Manager provides the environment used throughout this challenge to create Sources, configure RAG Collections, run user evaluations, build agent experiments, and integrate MCP tools.
+
+
+
+You will start with document-based knowledge. You will then extend CineAgent with an MCP tool server that provides access to structured movie data.
+
+
+
+For more information about SAS Retrieval Agent Manager and the available training resources, visit:
 
 * [Official Webpage](https://www.sas.com/en_us/software/retrieval-agent-manager.html)
 * [SAS Help Center for SAS RAM](https://go.documentation.sas.com/doc/en/ragntmgrcdc/v_013/ragntmgrug/titlepage.htm?fromDefault=)
@@ -60,113 +68,275 @@ For more information about SAS Retrieval Agent Manager and training courses on t
 
 
 
-### The Sources
+### Sources
 
 
 
-The first step is to make our movie knowledge available in **SAS Retrieval Agent Manager (RAM)**.
+The first step is to add the movie documents to **SAS Retrieval Agent Manager**.
 
+A Source contains the raw documents that will later be processed and indexed as part of the RAG pipeline.
 
 
-In the **documents** folder of this repository, you will find two files:
 
-* movies\_success\_guidelines.txt: contains guidelines and key principles for developing and evaluating a successful movie, covering areas such as story, audience, production, economics, marketing, and distribution.
-* movies\_summary.pdf: contains movie titles and their corresponding plot summaries.
+In the **documents** folder of the GitHub repository, you will find two files:
 
+* 'movies\_success\_guidelines.txt' contains guidelines for developing and evaluating a successful movie. It covers areas such as storytelling, audience, production, economics, marketing, and distribution.
+* 'movies\_summary.pdf' contains movie titles and their corresponding plot summaries. Each movie entry includes a movie ID, title, and summary.
 
 
-Download both files. We will use them to create **two separate Sources** in SAS Retrieval Agent Manager.
 
+Download both files to your computer. You will use them to create **two separate Sources** in SAS Retrieval Agent Manager.
 
 
-#### Create your first Source
 
-In SAS Retrieval Agent Manager, click **Sources**, then select **Local Files**.
+#### Create the two Sources
 
+A Source is where we will store the documents that provide knowledge to CineAgent.
 
+For this challenge, we will keep the two types of knowledge separate by creating **two Sources**:
 
-A Source is where we will store the documents that provide knowledge to CineAgent. For this challenge, we will keep the two types of knowledge separate by creating **two Sources**:
+* One for movie summaries
+* One for movies success guidelines
 
-* One for movies\_summary
-* One for movies\_success\_guidelines
 
 
+1. In the navigation pane, select **Sources**.
+2. Select **Local Files**.
+3. Enter the following name and description: 
 
-For each Source, provide a **Name** and a **Description**. Feel free to choose your own, or use the following examples:
+   1. **Name** 'Movie Summaries'
+   2. **Description** 'Movie plot summaries used to answer questions about movie stories, characters, and themes.'
+4. Select **Browse files** and load the 'movies\_summary.pdf' file 
+5. Select **Save**
+6. Create another source by selecting **Local Files**
+7. Enter the following name and description:
 
-* **Movie Summaries:** This Source contains movie summaries.
-* **Movie Success Guidelines:** This Source contains guidelines for developing and evaluating a successful movie.
+   1. **Name** 'Movie Success Guidelines'
+   2. **Description** 'Guidelines for developing and evaluating a successful movie, including storytelling, audience, production, financial considerations, marketing, and distribution.'
+8. Select **Browse files** and load the 'movies\_success\_guidelines.txt' file 
+9. Select **Save**
 
 
 
-Upload the corresponding file to each Source.
+#### Why two Sources? 
 
+Keeping the documents separate allows you to create, configure, and evaluate two independent RAG Collections: one for movie summaries and one for movie success guidelines.
 
 
-**Why two Sources?** Keeping the documents separate will allow us to build and experiment with two distinct knowledge bases in the next steps.
 
+This makes it easier to test different chunking and retrieval strategies for each type of content.
 
 
 
+#### Expected result
 
-### The Collections
+The **Sources** view should now contain:
 
+* 'Movie Summaries', with 'movies\_summary.pdf'.
+* 'Movie Success Guidelines', with 'movies\_success\_guidelines.txt'.
 
 
-Once the two sources were created, we need to create the vectorized tables that will be used by the RAG system.
 
+You are now ready to create a separate Collection for each Source.
 
 
-In the left panel, click **Collections** and then click **Create a Collection**. You are going to create two collections, one per each Sources we created before.
 
-* **Movie Summaries Knowledge**: This collection contains a document that has one paragraph per each movie. The paragraph as a three level structure: MOVIE\_ID, TITLE, SUMMARY.
-* **Movie Success Guidelines Knowledge**: This collection contains a document that has suggestions and guidelines to follow to write a successful movie.
 
 
+### Collections
 
-Once the two collections are ready, click the **Movie Summaries Knowledge**; the collection is empty, you are going to deploy your first RAG configuration.
 
 
+Now that the two Sources are available, you can create the Collections used by the RAG pipeline.
 
-#### Setup a Collection Configuration
 
-Click **Create a new configuration**.
 
+A Collection connects one or more Sources to a set of configurations. Each configuration defines how the source documents are divided into chunks, converted into vector embeddings, stored, and retrieved.
 
 
-In the Basics tab:
 
-* Specify a Name and a Description (for instance: test 1.0, RAG benchmark) for your configuration.
-* Specify the **Embedding model** (please, specify a multilingual model if you are planning to ask the agent questions in multiple languages).
-* Select **PostgreSQL** as the **Destination**.
-* In **Configuration update strategy** select **Append and sync**
+In this challenge, you will create two Collections:
 
+* Movie Summaries Knowledge
+* Movie Success Guidelines Knowledge
 
 
-In the Settings tab:
 
-* Specify a **Chunk size** \[xxx]
-* Specify the **Chunk overlap** \[xxx]
+Each Collection will use one of the Sources created in the previous section.
 
 
 
-Click **Save**.
+#### Create the Movie Summaries Knowledge Collection
 
+1. In the navigation pane, select **Collections**.
+2. Click **New Collection**.
+3. Enter the following information:
 
+   1. **Name**: 'Movie Summaries Knowledge'
+   2. **Description**: 'A RAG Collection containing movie titles and plot summaries. Each movie entry includes a movie ID, title, and summary.'
+4. Select the 'Movie Summaries' Source.
+5. Click **Save**.
 
-Click the **Play button** a the right of the screen to initialize the execution of the RAG process.
 
 
+#### Create the Movie Success Guidelines Knowledge Collection
 
-Feel free to prepare multiple configurations for your collection by changing the Chunk size and the Chunk overlap. You can setup a new configuration during the initialization process of another one.
+1. Return to the Collections view.
+2. Click **New Collection**.
+3. Enter the following information:
 
+   1. **Name**: 'Movie Success Guidelines Knowledge'
+   2. **Description**: 'A RAG Collection containing guidelines for developing and evaluating a successful movie.'
+4. Select the 'Movie Success Guidelines' Source.
+5. Click **Save**.
 
 
-Repeat the process, following the same logics, for the **Movie Success Guidelines Knowledge** collection.
 
-Create at least two or three configurations per each collection.
+#### Expected result
 
+The **Collections** view should now contain:
 
+* 'Movie Summaries Knowledge', associated with the 'Movie Summaries' Source;
+* 'Movie Success Guidelines Knowledge', associated with the 'Movie Success Guidelines' Source.
+
+
+
+The Collections do not contain vector embeddings yet. In the next steps, you will create and run multiple configurations for each Collection.
+
+
+
+
+
+### Collection configurations
+
+A configuration defines how the documents in a Collection are processed and indexed.
+
+
+
+You will create multiple configurations with different chunk size and chunk overlap values. You will then evaluate their retrieval performance and select the best configuration as the champion.
+
+
+
+> **Important**: You cannot edit a configuration after saving it. To test different values, create a new configuration or copy an existing one.
+
+
+
+#### Create the first Movie Summaries configuration
+
+1. Open the 'Movie Summaries Knowledge' Collection.
+2. On the **Summary** tab, click **Create a new configuration**.
+
+
+
+###### Basics
+
+On the **Basics** tab, enter or select the following values:
+
+* **Name**: Enter a descriptive and unique name, such as 'summaries-config-01'.
+* **Description**: Describe the parameters or purpose of the configuration, such as 'Initial benchmark configuration for movie summaries'.
+* **Embedding model**: Select an embedding model.
+* **Destination**: Select the PostgreSQL vector database destination provided for the hackathon.
+* **Configuration update strategy**: Select 'Append and sync'.
+
+
+
+> If you plan to submit queries in multiple languages, select a multilingual embedding model.
+
+
+
+###### Settings
+
+On the **Settings** tab, configure the chunking parameters:
+
+* **Chunk size**: 256
+* **Chunk overlap**: 36
+
+
+
+Leave the other settings at their default values unless instructed otherwise.
+
+
+
+3\. Click **Save**.
+
+
+
+##### Run the vectorization job
+
+After saving the configuration:
+
+1. Select the configuration on the **Summary** tab.
+2. Review the default execution settings.
+3. Click **Submit**.
+4. Monitor the job in the **Vectorization Status** column.
+
+
+
+Wait until the status is 'Completed' before using or evaluating the configuration.
+
+If the status is 'Error', open the job log, review the error details, and contact a hackathon organizer if you cannot resolve the issue.
+
+
+
+##### Create additional configurations
+
+Create at least two configurations for the 'Movie Summaries Knowledge' Collection.
+
+Use a different combination of **Chunk size** and **Chunk overlap** for each configuration. For example:
+
+|Configuration |Chunk size|Chunk overlap|
+|-|-|-|
+|summaries-config-01|256|36|
+|summaries-config-02|512|64|
+|summaries-config-03|128|0|
+
+
+
+You can create a new configuration while another vectorization job is running.
+
+Run a vectorization job for every configuration and wait until each **Vectorization Status** is 'Completed'.
+
+
+
+#### Configure the Movie Success Guidelines Collection
+
+Repeat the same process for the 'Movie Success Guidelines Knowledge' Collection.
+
+1. Open the 'Movie Success Guidelines Knowledge' Collection.
+2. Create at least three configurations.
+3. Use different chunk size and chunk overlap values for each configuration.
+4. Select the embedding model and PostgreSQL destination.
+5. Select 'Append and sync' as the configuration update strategy.
+6. Save each configuration.
+7. Run a vectorization job for every configuration.
+8. Wait until every **Vectorization Status** is 'Completed'.
+
+
+
+Use descriptive configuration names, such as:
+
+* 'guidelines-config-01'
+* 'guidelines-config-02'
+* 'guidelines-config-03'
+
+
+
+##### Expected result
+
+You should now have:
+
+* two Collections, each associated with the correct Source;
+* At least two configurations in each Collection;
+* Different chunking parameters across the configurations;
+* A completed vectorization job for every configuration.
+
+
+
+All configurations initially have the 'Under Evaluation' status. Later in the challenge, you will evaluate their retrieval performance and select the best configuration in each Collection as the 'Champion'.
+
+#### 
+
+#### 
 
 #### Retrieval Settings
 
@@ -392,6 +562,42 @@ Post the same question you tried for the Experiment 1, now you should see the ag
 
 
 Once you are confident with agent performance, you can select the champion agent experiment by selection Champion in the Status column and start the Agent Server. Now the agent can be used in the Chat window (left panel) or deployed in a custom infrastructure using the SAS RAM API.
+
+
+
+Let's try something different.
+
+Ask the agent to *Visualizza in un grafico la relazione tra il logaritmo del budget ed il logaritmo delle revenue*.
+
+Satisfy with the result? To manage more complicated interaction, you need to build a more advanced agent.
+
+
+
+### The Agent (Experiment 3)
+
+
+
+Download the run.py file stored in the code\_templates/code\_agent
+
+
+
+In the left panel click Code Templates
+
+* Click **Code Agent**
+* Provide a name: experiment\_3\_cineagent\_code and a description: Cineagent advanced deployment code
+* In the Code tab, click the **Browse button** and import the run.py file downloaded. Remember to publish the code
+
+
+
+In the left panel click Agents
+
+* Create a new agent experiment named Experiment 3
+* This time, the Experiment Type must be settled to Template-based experiment, select the experiment\_3\_cineagent\_code code and the right version (you should have only one version of the agent).
+* You can set System Prompt, Tools and Collections as the Experiment 3
+
+
+
+Use the Development Server to test the execution of the MCP tools that can plot a graph. Something has changed?
 
 
 
