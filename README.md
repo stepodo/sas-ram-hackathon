@@ -4,6 +4,16 @@
 
 
 
+
+
+### Index
+
+\[...]
+
+
+
+
+
 Welcome to the **SAS Retrieval Agent Manager Hackathon**!
 
 In this challenge, you will build an AI agent with one mission: **understand movies and use that knowledge to help create new ones**.
@@ -32,7 +42,7 @@ Are you ready? Let's start!
 
 
 
-### SAS Retrieval Agent Manager
+1. ### SAS Retrieval Agent Manager
 
 
 
@@ -40,7 +50,7 @@ In this challenge, you will build **CineAgent using** **SAS Retrieval Agent Mana
 
 
 
-#### Software overview
+#### 1.1 Software overview
 
 
 
@@ -56,11 +66,11 @@ For more information about SAS Retrieval Agent Manager and the available trainin
 
 * [Official Webpage](https://www.sas.com/en_us/software/retrieval-agent-manager.html)
 * [SAS Help Center for SAS RAM](https://go.documentation.sas.com/doc/en/ragntmgrcdc/v_013/ragntmgrug/titlepage.htm?fromDefault=)
-* [SAS Learning Portal](https://learn.sas.com/) 
+* [SAS Learning Portal](https://learn.sas.com/)
 
 
 
-#### How to access
+#### 1.2 How to access
 
 \[...]
 
@@ -68,7 +78,7 @@ For more information about SAS Retrieval Agent Manager and the available trainin
 
 
 
-### Sources
+### 2\. Sources
 
 
 
@@ -89,7 +99,7 @@ Download both files to your computer. You will use them to create **two separate
 
 
 
-#### Create the two Sources
+#### 2.1 Create the two Sources
 
 A Source is where we will store the documents that provide knowledge to CineAgent.
 
@@ -102,23 +112,23 @@ For this challenge, we will keep the two types of knowledge separate by creating
 
 1. In the navigation pane, select **Sources**.
 2. Select **Local Files**.
-3. Enter the following name and description: 
+3. Enter the following name and description:
 
    1. **Name** 'Movie Summaries'
    2. **Description** 'Movie plot summaries used to answer questions about movie stories, characters, and themes.'
-4. Select **Browse files** and load the 'movies\_summary.pdf' file 
+4. Select **Browse files** and load the 'movies\_summary.pdf' file
 5. Select **Save**
 6. Create another source by selecting **Local Files**
 7. Enter the following name and description:
 
    1. **Name** 'Movie Success Guidelines'
    2. **Description** 'Guidelines for developing and evaluating a successful movie, including storytelling, audience, production, financial considerations, marketing, and distribution.'
-8. Select **Browse files** and load the 'movies\_success\_guidelines.txt' file 
+8. Select **Browse files** and load the 'movies\_success\_guidelines.txt' file
 9. Select **Save**
 
 
 
-#### Why two Sources? 
+#### 2.2 Why two Sources?
 
 Keeping the documents separate allows you to create, configure, and evaluate two independent RAG Collections: one for movie summaries and one for movie success guidelines.
 
@@ -128,7 +138,7 @@ This makes it easier to test different chunking and retrieval strategies for eac
 
 
 
-#### Expected result
+#### 2.3 Expected result
 
 The **Sources** view should now contain:
 
@@ -143,7 +153,7 @@ You are now ready to create a separate Collection for each Source.
 
 
 
-### Collections
+### 3\. Collections
 
 
 
@@ -166,7 +176,7 @@ Each Collection will use one of the Sources created in the previous section.
 
 
 
-#### Create the Movie Summaries Knowledge Collection
+#### 3.1 Create the Movie Summaries Knowledge Collection
 
 1. In the navigation pane, select **Collections**.
 2. Click **New Collection**.
@@ -179,7 +189,7 @@ Each Collection will use one of the Sources created in the previous section.
 
 
 
-#### Create the Movie Success Guidelines Knowledge Collection
+#### 3.2 Create the Movie Success Guidelines Knowledge Collection
 
 1. Return to the Collections view.
 2. Click **New Collection**.
@@ -192,7 +202,7 @@ Each Collection will use one of the Sources created in the previous section.
 
 
 
-#### Expected result
+#### 3.3 Expected result
 
 The **Collections** view should now contain:
 
@@ -207,7 +217,7 @@ The Collections do not contain vector embeddings yet. In the next steps, you wil
 
 
 
-### Collection configurations
+### 4\. Collection configurations
 
 A configuration defines how the documents in a Collection are processed and indexed.
 
@@ -217,11 +227,11 @@ You will create multiple configurations with different chunk size and chunk over
 
 
 
-> **Important**: You cannot edit a configuration after saving it. To test different values, create a new configuration or copy an existing one.
+> \*\*Important\*\*: You cannot edit a configuration after saving it. To test different values, create a new configuration or copy an existing one.
 
 
 
-#### Create the first Movie Summaries configuration
+#### 4.1 Create the first Movie Summaries configuration
 
 1. Open the 'Movie Summaries Knowledge' Collection.
 2. On the **Summary** tab, click **Create a new configuration**.
@@ -261,7 +271,7 @@ Leave the other settings at their default values unless instructed otherwise.
 
 
 
-##### Run the vectorization job
+##### 4.1.1 Run the vectorization job
 
 After saving the configuration:
 
@@ -278,13 +288,13 @@ If the status is 'Error', open the job log, review the error details, and contac
 
 
 
-##### Create additional configurations
+##### 4.1.2 Create additional configurations
 
 Create at least two configurations for the 'Movie Summaries Knowledge' Collection.
 
 Use a different combination of **Chunk size** and **Chunk overlap** for each configuration. For example:
 
-|Configuration |Chunk size|Chunk overlap|
+|Configuration|Chunk size|Chunk overlap|
 |-|-|-|
 |summaries-config-01|256|36|
 |summaries-config-02|512|64|
@@ -298,7 +308,7 @@ Run a vectorization job for every configuration and wait until each **Vectorizat
 
 
 
-#### Configure the Movie Success Guidelines Collection
+#### 4.2 Configure the Movie Success Guidelines Collection
 
 Repeat the same process for the 'Movie Success Guidelines Knowledge' Collection.
 
@@ -321,7 +331,7 @@ Use descriptive configuration names, such as:
 
 
 
-##### Expected result
+#### 4.3 Expected result
 
 You should now have:
 
@@ -334,83 +344,367 @@ You should now have:
 
 All configurations initially have the 'Under Evaluation' status. Later in the challenge, you will evaluate their retrieval performance and select the best configuration in each Collection as the 'Champion'.
 
-#### 
-
-#### 
-
-#### Retrieval Settings
-
-Once all configurations have completed the Vectorization Status, you need to evaluate the RAG performance of each of them in order to select the champion model.
-
-To do this we need to:
-
-1. Provide the RAG system a description of the future purpose of our use case
-2. Sample questions with a known answer we can use to evaluate model performance
 
 
 
-In the left panel, click **Retrieval Settings**.
 
-SAS provides six standard retrieval settings: **Concise**, **Context**, **Default**, **Detailed** and **Summary**. However, you are going to build dedicated ones.
-
-* Click the **New** button a the top right of the window
-* Provide a N**ame** to your custom retrieval setting: write **Movie Guidelines Prompt**
-* In the GitHub repository, navigate the content of the *retrieval\_settings* folder and copy the content of **movie\_guideline\_collection.txt**
-* Paste the content in the **System prompt template** replacing the default prompt
-* Leave all other settings as default
-* Click **Save**
+### 5\. Retrieval Settings
 
 
 
-Repeat the same process for the Movie Summary Knowledge collection by coping and pasting the content of the **movie\_summary\_collection.txt** file. Name the custom retrieval setting as **Movie Summary Prompt**.
+Now that the documents have been vectorized, you need to define how the retrieved content will be provided to the large language model.
 
 
 
-#### Evaluation Tests (collections)
-
-In the left panel, click **Evaluation Tests**. Now you are going to implement a series of questions with known answers to evaluate the RAG system
-
-* Click **Create an evaluation test**
-* Provide a **Name** (for instance Movie Guideline Test) and a Description.
-* Leave Passing threshold to 100%
-* In the GitHub repository navigate the content of the *evaluation\_tests* folder and download the **movie\_guidelines\_evaluation.xlsx** file. Use the columns Question, Metric and Condition to build the question inside the SAS RAM
-* Click **Create test case**
-* Paste the content of the column Question in the **Prompt**, check **Metric** match and paste the corresponding **Value**.
-* When multiple assertions are required, click the **New Assertion button** and follow the order in the Metric and Condition "n" columns in the Excel file.
+A retrieval setting controls how SAS Retrieval Agent Manager retrieves context from a Collection and how the LLM uses that context to answer a query.
 
 
 
-Repeat the process with the content of the **movie\_summary\_evaluation.xlsx** file.
+SAS provides six standard retrieval settings: **Concise**, **Context**, **Default**, **Detailed** and **Summary**.
 
 
 
-Go back to the Collections window:
+In this challenge, you will create two custom retrieval settings:
 
-* Click one of the two collection you built
-* Click the **LLMs** tab
-* Move the LLM model you prefer on the right panel (click the **arrow button**).
-* Once the model is listed on the right, please remember to specify in Retrieval Settings the right custom retrieval setting you created.
-* Specify the model as the Eval LLM model (menu at the bottom of the right panel).
-* Remember to click the **Save button** a the top right of the window.
+* 'Movie Guidelines Retrieval Setting'
+* 'Movie Summaries Retrieval Setting'
 
 
 
-Now you are ready to run the evaluation tests:
-
-* Click the **User Eval** tab
-* Select all configurations you built in this collection
-* Select the right test in the **Test** tab.
-* Click **Ok**
+Each custom retrieval setting uses a system prompt template designed for the corresponding type of movie knowledge.
 
 
 
-Once the execution is completed, you can display the results in the **Summary** tab. Select the best model as the champion model of your collection using the **Configuration Status** menu.
+> \*\*Important\*\*: The system prompt template must include the '{context}' variable. SAS Retrieval Agent Manager replaces this variable with the content retrieved from the Collection.
 
 
 
-Repeat this process for the other collection you built.
+#### 5.1 Create the Movie Guidelines Retrieval Setting
+
+1. In the navigation pane, select **Retrieval Settings**.
+2. Click **New**.
+3. In the **Name** field, enter: 'Movie Guidelines Retrieval Setting'
+4. In the GitHub repository, open the 'retrieval\_settings' folder.
+5. Open 'movie\_guideline\_collection.txt'.
+6. Copy the complete content of the file.
+7. Replace the default content in the **System prompt template** field with the copied text.
+8. Verify that the template includes the '{context}' variable.
+9. Leave the other retrieval parameters at their default values.
+10. Click **OK** to save the retrieval setting.
 
 
+
+#### 5.2 Create the Movie Summaries Retrieval Setting
+
+1. In the **Retrieval Settings** view, click **New**.
+2. In the **Name** field, enter: 'Movie Summaries Retrieval Setting'
+3. In the GitHub repository, open the 'retrieval\_settings' folder.
+4. Open 'movie\_summary\_collection.txt'.
+5. Copy the complete content of the file.
+6. Replace the default content in the **System prompt template** field with the copied text.
+7. Verify that the template includes the '{context}' variable.
+8. Leave the other retrieval parameters at their default values.
+9. Click **OK** to save the retrieval setting.
+
+
+
+
+
+### 6\. Assign the Retrieval Settings to the Collections
+
+
+
+Creating a retrieval setting does not automatically associate it with a Collection. You must assign each retrieval setting to an LLM in the corresponding Collection.
+
+
+
+#### 6.1 Configure the Movie Success Guidelines Knowledge Collection
+
+1. In the navigation pane, select **Collections**.
+2. Open the 'Movie Success Guidelines Knowledge' Collection.
+3. Select the **LLMs** tab.
+4. From the list of available LLMs, add the model that you want to use with the Collection.
+5. For the configured LLM, select: 'Movie Guidelines Retrieval Setting'
+6. In the **User Eval** section, select the LLM that will be used as the **Eval LLM**.
+7. Click **Save**.
+
+
+
+#### 6.2 Configure the Movie Summaries Knowledge Collection
+
+1\. Return to the **Collections** view.
+
+2\. Open the 'Movie Summaries Knowledge' Collection.
+
+3\. Select the **LLMs** tab.
+
+4\. From the list of available LLMs, add the model that you want to use with the Collection.
+
+5\. For the configured LLM, select: 'Movie Summaries Retrieval Setting'
+
+6\. In the **User Eval** section, select the LLM that will be used as the **Eval LLM**.
+
+7\. Click **Save**.
+
+
+
+> **Tip**: You can use the same LLM for both Collections. Using the same model makes it easier to compare the effect of different Collection configurations without introducing an additional model variable.
+
+
+
+#### 6.3 Expected result
+
+You should now have:
+
+* A 'Movie Guidelines Retrieval Setting' containing the custom prompt for the movie success guidelines
+* A 'Movie Summaries Retrieval Setting' containing the custom prompt for the movie summaries
+* An LLM configured for each Collection
+* The correct custom retrieval setting assigned to the LLM in each Collection
+* An Eval LLM selected for user evaluations
+
+
+
+You are now ready to create the user evaluation tests that will be used to compare the Collection configurations.
+
+
+
+
+
+### 7\. Evaluate the Collection configurations
+
+
+
+The next step is to evaluate the retrieval performance of the configurations created for each Collection.
+
+
+
+You will use questions with known answers to determine which configuration produces the most accurate responses. The evaluation results will help you select a champion configuration for each Collection.
+
+
+
+The GitHub repository contains two evaluation files:
+
+* 'movie\_guidelines\_evaluation.xlsx'
+* 'movie\_summary\_evaluation.xlsx'
+
+
+
+Each row in these files contains:
+
+* A question to submit to the RAG pipeline;
+* One or more evaluation metrics;
+* The expected values or conditions used to evaluate the response.
+
+
+
+In SAS Retrieval Agent Manager, these questions and expected results are implemented as reusable **User Eval Tests**.
+
+
+
+#### 7.1 Create the Movie Guidelines User Eval Test
+
+1. In the navigation pane, select **User Eval Tests**.
+2. Click **New**.
+3. Enter the following information:
+
+   1. **Name**: 'Movie Guidelines Evaluation'
+   2. **Description**: 'Evaluates responses generated from the Movie Success Guidelines Knowledge Collection.'
+   3. **Passing Threshold**: '100'
+4. Click **OK** to create the test.
+
+
+
+##### 7.1.1 Add the test prompts
+
+1. In the GitHub repository, open the 'evaluation\_tests' folder.
+2. Download and open 'movie\_guidelines\_evaluation.xlsx'.
+3. In SAS Retrieval Agent Manager, open 'Movie Guidelines Evaluation'.
+4. Click **Create one** to add the first test prompt.
+5. Copy the value from the 'Question' column of the spreadsheet into the **Prompt** field.
+6. Set the **Passing threshold (%)** to '100'.
+7. Under **Assertions**:
+
+   1. Select the metric specified in the 'Metric' column;
+   2. Enter the corresponding expected value from the 'Condition' column in the **Value** field.
+8. If the spreadsheet row contains additional 'Metric n' and 'Condition n' pairs:
+
+   1. click **New assertion**;
+   2. select the additional metric;
+   3. enter the corresponding expected value;
+   4. repeat this step for every additional assertion in the row.
+9. Save the test prompt.
+10. 10\. Repeat these steps for every row in 'movie\_guidelines\_evaluation.xlsx'.
+
+
+
+> \*\*Important\*\*: Preserve the order and spelling of the expected values in the spreadsheet. Do not translate or rewrite them.
+
+
+
+#### 7.2 Create the Movie Summaries User Eval Test
+
+1. Return to the **User Eval Tests** view.
+2. Click **New**.
+3. Enter the following information:
+
+   1. **Name**: 'Movie Summaries Evaluation'
+   2. **Description**: 'Evaluates responses generated from the Movie Summaries Knowledge Collection.'
+   3. **Passing Threshold**: '100'
+4. Click **OK** to create the test.
+5. In the GitHub repository, open the 'evaluation\_tests' folder.
+6. Download and open 'movie\_summary\_evaluation.xlsx'.
+7. Add one test prompt for each row in the spreadsheet:
+
+   1. copy 'Question' into the **Prompt** field;
+   2. set **Passing threshold (%)** to '100';
+   3. select the metric specified in 'Metric';
+   4. copy the corresponding 'Condition' into the **Value** field;
+   5. use **New assertion** for every additional 'Metric n' and 'Condition n' pair.
+8. 8\. Save every test prompt.
+
+
+
+#### 7.3 Expected result
+
+The **User Eval Tests** view should now contain: 'Movie Guidelines Evaluation' and 'Movie Summaries Evaluation'.
+
+Each test should contain all the questions and assertions provided in the corresponding spreadsheet.
+
+
+
+#### 7.4 Prepare the Collections for evaluation
+
+Before running the evaluations, verify that each Collection has:
+
+* At least two vectorized configurations
+* A 'Completed' **Vectorization Status** for every configuration
+* At least one configured LLM
+* The correct custom retrieval setting assigned to that LLM
+* An **Eval LLM** selected in the **User Eval** section
+
+
+
+#### 7.5 Verify the Movie Success Guidelines Knowledge Collection
+
+1. In the navigation pane, select **Collections**.
+2. Open 'Movie Success Guidelines Knowledge'.
+3. Select the **LLMs** tab.
+4. Verify that the LLM you want to evaluate appears in the list of configured LLMs.
+5. Verify that 'Movie Guidelines Retrieval Setting' is assigned to the configured LLM.
+6. In the **User Eval** section, select an **Eval LLM**.
+7. Click **Save**.
+
+
+
+#### 7.6 Verify the Movie Summaries Knowledge Collection
+
+1. Return to the **Collections** view.
+2. Open 'Movie Summaries Knowledge'.
+3. Select the **LLMs** tab.
+4. Verify that the LLM you want to evaluate appears in the list of configured LLMs.
+5. Verify that 'Movie Summaries Retrieval Setting' is assigned to the configured LLM.
+6. In the **User Eval** section, select an **Eval LLM**.
+7. Click **Save**.
+
+
+
+#### 7.7 Evaluate the Movie Success Guidelines configurations
+
+1. Open the 'Movie Success Guidelines Knowledge' Collection.
+2. Select the **User Eval** tab.
+3. Click the button to create a new evaluation.
+4. On the **Configurations** tab, select all the configurations that you want to compare.
+5. Add the selected configurations to the right pane.
+6. On the **Tests** tab, select 'Movie Guidelines Evaluation'.
+7. Click **OK** to start the evaluation.
+8. Monitor the evaluation status until the job is complete.
+
+
+
+When the evaluation is complete, select the job in the **User Eval** tab to review:
+
+* The prompt submitted to each configuration;
+* The response generated by the LLM;
+* The assertions applied to the response;
+* Which assertions passed or failed;
+* The overall evaluation score.
+
+
+
+#### 7.8 Evaluate the Movie Summaries configurations
+
+1. Open the 'Movie Summaries Knowledge' Collection.
+2. Select the **User Eval** tab.
+3. Start a new evaluation.
+4. On the **Configurations** tab, select all the configurations that you want to compare.
+5. On the **Tests** tab, select 'Movie Summaries Evaluation'.
+6. Click **OK** to start the evaluation.
+7. Monitor the evaluation status until the job is complete.
+8. Review the results and compare the scores of the selected configurations.
+
+
+
+#### 7.9 Select the champion configurations
+
+After reviewing the evaluation results, select the best-performing configuration in each Collection as the champion.
+
+
+
+##### 7.9.1 Select the Movie Success Guidelines champion
+
+1. Open the 'Movie Success Guidelines Knowledge' Collection.
+2. Select the **Summary** tab.
+3. Compare the values in the Last **User Eval** column.
+4. Review the detailed evaluation results if two or more configurations have similar scores.
+5. In the **Configuration Status** column, set the best-performing configuration to 'Champion'.
+
+
+
+##### 7.9.2  Select the Movie Summaries champion
+
+1. Open the 'Movie Summaries Knowledge' Collection.
+2. Select the **Summary** tab.
+3. Compare the values in the **Last User Eval** column.
+4. Review the detailed evaluation results if necessary.
+5. In the **Configuration Status** column, set the best-performing configuration to 'Champion'.
+
+
+
+A configuration can have one of the following statuses:
+
+* 'Under Evaluation': a new configuration that has not yet been selected for production use;
+* 'Challenger': a configuration being tested as a possible alternative;
+* 'Champion': the primary configuration used for queries by agents and end users.
+
+
+
+> **Important**: Each Collection must have a champion configuration before it can be used by CineAgent.
+
+
+
+##### 7.9.3 Expected result
+
+You should now have:
+
+* Two reusable User Eval Tests;
+* One completed evaluation for the configurations in each Collection;
+* Detailed results showing which prompts and assertions passed or failed;
+* One champion configuration in 'Movie Success Guidelines Knowledge';
+* One champion configuration in 'Movie Summaries Knowledge'.
+
+
+
+The document-based RAG implementation is now ready for an initial test in the Chat view.
+
+
+
+
+
+
+
+
+
+\_\_\_
 
 
 
@@ -418,7 +712,7 @@ Repeat this process for the other collection you built.
 
 
 
-The RAG implementation is completed! 
+The RAG implementation is completed!
 
 In the left panel, click **Chat**, then keep the selection to the **Collection** tab.
 
@@ -477,7 +771,7 @@ In Collections tab:
 
 
 
-You can start the Development Server to test your Experiment 1 (please note you need to click on **Open Chat**). For instance, try ask something like *Ciao, vorrei sviluppare un nuovo film western. Suggeriscimi una trama e analizza quali tematiche e quale periodo di uscita potrebbero contribuire a massimizzarne il ROI.* 
+You can start the Development Server to test your Experiment 1 (please note you need to click on **Open Chat**). For instance, try ask something like *Ciao, vorrei sviluppare un nuovo film western. Suggeriscimi una trama e analizza quali tematiche e quale periodo di uscita potrebbero contribuire a massimizzarne il ROI.*
 
 
 
@@ -489,7 +783,7 @@ Once you have obtained the answer, click on the **Detail view** button to access
 
 Now it is time to evaluate the performance of the agent.
 
-Following the same strategy adopted for the collections, you are going to create a test in the **Evaluation Tests** window. 
+Following the same strategy adopted for the collections, you are going to create a test in the **Evaluation Tests** window.
 
 Test questions are listed in the Excel file named **cineagent\_evaluation.xlsx** available in the *evaluation\_tests* folder inside the GitHub repository.
 
@@ -499,7 +793,7 @@ Test questions are listed in the Excel file named **cineagent\_evaluation.xlsx**
 
 
 
-The Experiment 1 works, but you are not leveraging all the information you have access to. Indeed, you have access to structured cinematic data (a table in a database) that contains useful information. 
+The Experiment 1 works, but you are not leveraging all the information you have access to. Indeed, you have access to structured cinematic data (a table in a database) that contains useful information.
 
 The table (available as CSV file in the GitHub repository) has:
 
