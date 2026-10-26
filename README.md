@@ -19,7 +19,7 @@ You will build CineAgent step by step:
 
 By the end, CineAgent will not only know about movies; it will help you imagine the next one.
 
-Reusable resources for building, evaluating, and extending AI agents with **SAS Retrieval Agent Manager**.
+This GitHub repository contains reusable resources for building, evaluating, and extending AI agents with **SAS Retrieval Agent Manager**.
 
 This repository includes:
 
@@ -32,9 +32,7 @@ This repository includes:
 
 > **Note:** SAS RAM refers to SAS Retrieval Agent Manager.
 
----
-
-## 0. Repository map
+## Repository map
 
 | Folder | Purpose |
 |---|---|
