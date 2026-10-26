@@ -36,6 +36,7 @@ This repository includes:
 
 > **Note:** SAS RAM refers to SAS Retrieval Agent Manager.
 
+
 ## Repository map
 
 | Folder | Purpose |
@@ -51,6 +52,13 @@ This repository includes:
 This project is licensed under the [Apache License 2.0](LICENSE).
 
 See [NOTICE](NOTICE) for attribution and third-party material information.
+
+
+## Version
+
+Current release: **v1.0.0**
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ---
 
