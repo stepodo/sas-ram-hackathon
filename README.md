@@ -6,14 +6,6 @@
 
 
 
-### Index
-
-\[...]
-
-
-
-
-
 Welcome to the **SAS Retrieval Agent Manager Hackathon**!
 
 In this challenge, you will build an AI agent with one mission: **understand movies and use that knowledge to help create new ones**.
@@ -1111,7 +1103,7 @@ When the server is running, the details pane should display **25 tools**. The to
 
 
 
-|Capability|Example tools|Purpose|
+|**Capability**|**Example tools**|**Purpose**|
 |-|-|-|
 |Dataset discovery and retrieval|'get\_dataset\_schema', 'search\_movies', 'get\_movie', 'filter\_movies', 'rank\_movies'|Explore the database and retrieve movie records using textual or structured conditions.|
 |Aggregation and comparison|'aggregate\_movies', 'compare\_segments', 'analyze\_release\_timing', 'analyze\_trends'|Calculate summary metrics and compare movies across categories or periods.|
@@ -1178,77 +1170,168 @@ You should now have:
 
 
 
+### 12\. Create CineAgent Experiment 2
+
+
+
+'CineAgent Experiment 2 - Collections and MCP Tools' extends Experiment 1 by giving CineAgent access to the structured movie database through the MCP tools.
+
+
+
+Follow the same procedure used for 'CineAgent Experiment 1 - Collections Only', with the following differences:
+
+1. Create a new agent experiment named 'CineAgent Experiment 2 - Collections and MCP Tools'.
+2. Select **Tools-based experiment**.
+3. Copy the system prompt from 'cineagent\_experiment\_2.txt', located in the 'retrieval\_settings' folder of the GitHub repository.
+4. On the **LLMs** tab, select the same LLM used for Experiment 1.
+5. On the **Tools** tab, add all the tools provided by 'Movie Database MCP Server'.
+6. On the **Collections** tab, add: 'Movie Success Guidelines Knowledge' and 'Movie Summaries Knowledge'.
+7. Use the same CPU and RAM values as Experiment 1.
+8. Click **Create**.
+
+
+
+Experiment 2 can now combine document retrieval with structured movie-data analysis.
+
+
+
+#### 12.1 Evaluate CineAgent Experiment 2
+
+Run 'CineAgent Evaluation' against 'CineAgent Experiment 2 - Collections and MCP Tools'. Compare its score and responses with 'CineAgent Experiment 1 - Collections Only', paying particular attention to questions that require filtering, ranking, counting, aggregation, financial metrics, or statistical analysis.
+
+
+
+You can also repeat the questions tested manually during Experiment 1. Open the response details to verify which MCP tools were called and inspect their inputs and outputs.
+
+For example:
+
+* *Quali sono i cinque film con il ROI più alto?*
+* *Qual è il budget medio dei film diretti da Christopher Nolan?*
+
+
+
+#### 12.2 Test chart generation
+
+Submit the following request: *Visualizza in un grafico la relazione tra il logaritmo del budget e il logaritmo delle revenue.*
+
+Experiment 2 can use the MCP tools to generate the chart data and image. However, its standard tools-based workflow does not render the generated image directly in the chat output. To support this richer interaction, you will create a template-based experiment.
+
+
+
+#### 12.3 Create the CineAgent visual-output template
+
+1. In the GitHub repository, open 'code\_templates/code\_agent'.
+2. Download the run.py file containing the agent template files.
+3. In SAS Retrieval Agent Manager, select **Code Templates**.
+4. Click **Code Agent**.
+5. Enter **Name**: 'CineAgent Visual Output Agent Template', **Description**: 'Template that enables CineAgent to display generated charts in its responses.'
+6. On the **Code** tab, click **Browse** and upload the run.py file.
+7. Configure any aliases or environment variables required by the template.
+8. Click **Save**.
+9. Select 'CineAgent Visual Output Agent Template' and publish it. Publishing the template makes it available when creating a template-based agent experiment.
+
+
+
+### 13\. Create CineAgent Experiment 3
+
+
+
+'CineAgent Experiment 3 - Template-Based Visual Output' extends Experiment 2 with a custom agent template that can display generated charts directly in the response. 
+
+
+
+**Note**: A template-based approach provides greater flexibility and control by allowing developers to customize the agent’s execution logic, process tool outputs, support richer response formats such as images, and reuse the same implementation across multiple agent experiments.
+
+
+
+1. Open 'CineAgent'.
+2. Select the **Summary** tab.
+3. Add a new agent experiment.
+4. Enter: **Name**: 'CineAgent Experiment 3 - Template-Based Visual Output', **Experiment type**: 'Template-based experiment'
+5. Select 'CineAgent Visual Output Agent Template'.
+6. Select the published template version.
+7. Configure the same system prompt used for Experiment 2.
+8. Assign the same LLM, Collections, and MCP tools used for Experiment 2.
+9. Configure the aliases and environment variables required by the template.
+10. Click **Create**.
+
+
+
+#### 13.1 Test CineAgent Experiment 3
+
+Use the **Development Server** to test 'CineAgent Experiment 3 - Template-Based Visual Output'. 
+
+Submit the chart request again: *Visualizza in un grafico la relazione tra il logaritmo del budget e il logaritmo delle revenue*.
+
+
+
+Verify that the experiment:
+
+* Calls the appropriate MCP tool;
+* Receives the chart generated by the tool;
+* Displays the resulting image in the chat output.
+
+
+
+The analytical result should be consistent with Experiment 2. The difference is that Experiment 3 processes the tool output through the custom agent template and renders the chart in the response.
+
+
+
+### 14\. Compare the CineAgent experiments
+
+
+
+|**Agent experiment**|**Knowledge Collections**|**MCP tools**|**Images in chat**|
+|-|-|-|-|
+|CineAgent Experiment 1 - Collections Only|Yes|No|No|
+|CineAgent Experiment 2 - Collections and MCP Tools|Yes|Yes|No|
+|CineAgent Experiment 3 - Template-Based Visual Output|Yes|Yes|Yes|
 
 
 
 
-\_\_\_\_
 
-### The Agent (Experiment 2)
-
-
-
-Follow the same process reported in the section The Agent (Experiment 1). However:
-
-* The Name of the Agent Experiment this time is Experiment 2
-* This agent has its dedicated System Prompt, paste it from the file **cineagent\_experiment\_2.txt** stored in the folder *retrieval\_settings* in the GitHub repository.
-* In the tool tab, move all the MCP tools you just built on the right panel, so the agent can access them.
+Run 'CineAgent Evaluation' against Experiments 2 and 3 and compare their results with the Experiment 1 baseline.
 
 
 
-You can test the Experiment 2 performance using the same set of questions implemented before.
+After reviewing the scores and manual tests:
+
+1. Select the best-performing experiment;
+2. Set its **Status** to 'Champion';
+3. Start 'CineAgent'.
 
 
 
-Post the same question you tried for the Experiment 1, now you should see the agent answering some of your requests using the MCP tools you built.
+The running champion experiment can then be used from the **Agent** tab in the Chat interface.
 
 
 
-Once you are confident with agent performance, you can select the champion agent experiment by selection Champion in the Status column and start the Agent Server. Now the agent can be used in the Chat window (left panel) or deployed in a custom infrastructure using the SAS RAM API.
+
+
+### Congratulations!
+
+#### Congratulations! You have successfully completed the CineAgent challenge.
 
 
 
-Let's try something different.
+You created and evaluated document-based Knowledge Collections, built a reusable evaluation framework, deployed a Movie Database MCP Server, and progressively enhanced CineAgent through three experiments:
 
-Ask the agent to *Visualizza in un grafico la relazione tra il logaritmo del budget ed il logaritmo delle revenue*.
-
-Satisfy with the result? To manage more complicated interaction, you need to build a more advanced agent.
-
-
-
-### The Agent (Experiment 3)
+* 'CineAgent Experiment 1 - Collections Only'
+* 'CineAgent Experiment 2 - Collections and MCP Tools'
+* 'CineAgent Experiment 3 - Template-Based Visual Output'
 
 
 
-Download the run.py file stored in the code\_templates/code\_agent
+You now have an agent that can combine unstructured movie knowledge, structured data analysis, MCP tools, and richer visual responses.
 
 
 
-In the left panel click Code Templates
-
-* Click **Code Agent**
-* Provide a name: experiment\_3\_cineagent\_code and a description: Cineagent advanced deployment code
-* In the Code tab, click the **Browse button** and import the run.py file downloaded. Remember to publish the code
+Thank you for taking part in this challenge. We hope you enjoyed building CineAgent and exploring the capabilities of SAS Retrieval Agent Manager.
 
 
 
-In the left panel click Agents
-
-* Create a new agent experiment named Experiment 3
-* This time, the Experiment Type must be settled to Template-based experiment, select the experiment\_3\_cineagent\_code code and the right version (you should have only one version of the agent).
-* You can set System Prompt, Tools and Collections as the Experiment 3
-
-
-
-Use the Development Server to test the execution of the MCP tools that can plot a graph. Something has changed?
-
-
-
-**Congratulation! You have completed the SAS RAM Hackathon Challenge!**
-
-**Please, if you want, feel free to continue to test different Collections, Agents and MCP tools configuration!**
-
-
+**Well done, and have fun experimenting with your agent!**
 
 
 
