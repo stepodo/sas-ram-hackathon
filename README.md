@@ -17,7 +17,31 @@ You will build CineAgent step by step:
 3. Experiment, evaluate, and improve different agent versions.
 4. Select your champion experiment.
 
-By the end, CineAgent will not only know about movies — it will help you imagine the next one.
+By the end, CineAgent will not only know about movies; it will help you imagine the next one.
+
+Reusable resources for building, evaluating, and extending AI agents with **SAS Retrieval Agent Manager**.
+
+This repository includes:
+
+- Document sources for RAG knowledge bases
+- Retrieval-setting prompt templates
+- User evaluation tests
+- MCP server and agent code templates
+- Reference implementation of **CineAgent**
+- Supporting SAS programs and documentation
+
+> **Note:** SAS RAM refers to SAS Retrieval Agent Manager.
+
+---
+
+## 0. Repository map
+
+| Folder | Purpose |
+|---|---|
+| `documents/` | Source documents for RAG Collections |
+| `retrieval_settings/` | System prompt templates for retrieval settings and agent experiments |
+| `evaluation_tests/` | Evaluation questions, metrics, and expected conditions |
+| `code_templates/` | MCP server and custom agent templates |
 
 ---
 
