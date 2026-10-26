@@ -294,7 +294,7 @@ Create at least two configurations for the 'Movie Summaries Knowledge' Collectio
 
 Use a different combination of **Chunk size** and **Chunk overlap** for each configuration. For example:
 
-|Configuration|Chunk size|Chunk overlap|
+|**Configuration**|**Chunk size**|**Chunk overlap**|
 |-|-|-|
 |summaries-config-01|256|36|
 |summaries-config-02|512|64|
@@ -375,7 +375,7 @@ Each custom retrieval setting uses a system prompt template designed for the cor
 
 
 
-> \*\*Important\*\*: The system prompt template must include the '{context}' variable. SAS Retrieval Agent Manager replaces this variable with the content retrieved from the Collection.
+**Important**: The system prompt template must include the '{context}' variable. SAS Retrieval Agent Manager replaces this variable with the content retrieved from the Collection.
 
 
 
@@ -448,7 +448,7 @@ Creating a retrieval setting does not automatically associate it with a Collecti
 
 
 
-> **Tip**: You can use the same LLM for both Collections. Using the same model makes it easier to compare the effect of different Collection configurations without introducing an additional model variable.
+**Tip**: You can use the same LLM for both Collections. Using the same model makes it easier to compare the effect of different Collection configurations without introducing an additional model variable.
 
 
 
@@ -474,11 +474,7 @@ You are now ready to create the user evaluation tests that will be used to compa
 
 
 
-The next step is to evaluate the retrieval performance of the configurations created for each Collection.
-
-
-
-You will use questions with known answers to determine which configuration produces the most accurate responses. The evaluation results will help you select a champion configuration for each Collection.
+The next step is to evaluate the retrieval performance of the configurations created for each Collection. You will use questions with known answers to determine which configuration produces the most accurate responses. The evaluation results will help you select a champion configuration for each Collection.
 
 
 
@@ -537,7 +533,7 @@ In SAS Retrieval Agent Manager, these questions and expected results are impleme
 
 
 
-> \*\*Important\*\*: Preserve the order and spelling of the expected values in the spreadsheet. Do not translate or rewrite them.
+**Important**: Preserve the order and spelling of the expected values in the spreadsheet. Do not translate or rewrite them.
 
 
 
@@ -678,7 +674,7 @@ A configuration can have one of the following statuses:
 
 
 
-> **Important**: Each Collection must have a champion configuration before it can be used by CineAgent.
+**Important**: Each Collection must have a champion configuration before it can be used by CineAgent.
 
 
 
@@ -700,6 +696,103 @@ The document-based RAG implementation is now ready for an initial test in the Ch
 
 
 
+### 8\. Test the Collections in Chat
+
+
+
+The document-based RAG implementation is now ready.
+
+Before creating CineAgent, use the Chat interface to test the champion configuration of each Collection. This allows you to verify how the RAG pipeline retrieves information and generates answers from one document-based knowledge source at a time.
+
+
+
+#### 8.1 Test the Movie Success Guidelines Collection
+
+1. In the navigation pane, select **Chat**.
+2. Select the **Collection** tab.
+3. Select the 'Movie Success Guidelines Knowledge' Collection.
+4. Select its champion configuration.
+5. Verify that the correct LLM and 'Movie Guidelines Retrieval Setting' are selected.
+6. Enter a question in the chat.
+
+
+
+For example: *Ciao, quali sono i principali fattori che contribuiscono al successo di un film?*
+
+Review the response and verify  that it is supported by the movie success guidelines.
+
+
+
+#### 8.2 Test the Movie Summaries Collection
+
+1. Remain on the **Collection** tab.
+2. Select the 'Movie Summaries Knowledge' Collection.
+3. Select its champion configuration.
+4. Verify that the correct LLM and 'Movie Summaries Retrieval Setting' are selected.
+5. Enter a question about a movie included in the Collection.
+
+
+
+For example: *Ciao, cosa sai del film 8 Mile?*
+
+Review the response and verify that it is based on the retrieved movie summary.
+
+
+
+**Note**: These example questions are intentionally written in Italian. They can help you test the multilingual capabilities of the selected embedding model and LLM.
+
+
+
+#### 8.3 Inspect the response details
+
+After receiving a response, open the **Details** view (the button is placed at the end of the answer). Use the activity log to inspect:
+
+* The Collection and configuration queried
+* The retrieval prompt
+* The documents retrieved
+* The number of chunks returned
+* The content and original position of each retrieved chunk
+* The LLM call used to generate the final response
+* The response duration and cost
+
+
+
+Reviewing these details helps you understand how the selected configuration retrieved the information used in the answer.
+
+
+
+##### 8.3.1 What should you check?
+
+For each response, consider the following questions:
+
+* Did the system retrieve information from the correct document?
+* Are the retrieved chunks relevant to the question?
+* Does the answer accurately reflect the retrieved content?
+* Is important context missing from the answer?
+* Does the system avoid providing unsupported information?
+* Is the response clear and useful?
+
+
+
+If the results are not satisfactory, return to the Collection and compare the response with another configuration. You can also review the chunk size, chunk overlap, retrieval setting, and evaluation results.
+
+
+
+**Collection chat versus an agent**: At this stage, you are interacting directly with the RAG pipeline of a Collection. The system retrieves relevant chunks from the selected Collection and provides them to the LLM, which generates the response. It does not yet have the broader instructions, multiple knowledge sources, or tools that will be assigned to CineAgent. In the next section, you will create the first CineAgent experiment and give it access to both champion Collections.
+
+
+
+#### 8.4 Expected result
+
+You should now have:
+
+* Tested the champion configuration of both Collections.
+* Received answers grounded in the corresponding documents.
+* Inspected the retrieval activity and retrieved chunks.
+* Confirmed that both Collections are ready to be used by CineAgent.
+
+
+
 
 
 
@@ -708,84 +801,192 @@ The document-based RAG implementation is now ready for an initial test in the Ch
 
 
 
-### Chat
-
-
-
-The RAG implementation is completed!
-
-In the left panel, click **Chat**, then keep the selection to the **Collection** tab.
-
-Select the champion configuration in the Movie Success Guidelines Knowledge collection and query the RAG system (for instance: C*iao, quali sono i segreti per un film di successo?*)
-
-You can repeat the same test with the champion configuration from the Movie Summaries Knowledge (for instance: *Ciao, cosa sai del film di Eminem 8 Mile?*)
-
-
-
-Technically speaking, this is not an agent, but just the RAG at works!
-
-
-
-Now is time to build your CineAgent!
 
 
 
 
-
-### The Agent (Experiment 1)
-
-
-
-To deploy the first experiment of the CineAgent, you need:
-
-1. An appropriate System Prompt
-2. Give the agent the possibility to explore the content of the two RAG systems you built
+### 9\. Create CineAgent and Experiment 1
 
 
 
-In the left panel, click **Agents**
-
-* Click Create an Agent
-* Specify CineAgent as the agent Name, write a description. Leave System Prompt and Chat initializer command empty (the default)
-* Click Add Agent Experiment
+The document-based knowledge sources are now ready to be used by an agent.
 
 
 
-In Details tab:
-
-* As experiment Name write Experiment 1
-* In System Prompt paste the content of the file cineagent\_experiment\_1.txt file stored in the GitHub repository under the folder retrieval\_settings
+In this section, you will create 'CineAgent', an agent specialized in movies of different eras and genres. You will then configure the first agent experiment.
 
 
 
-In LLMs tab:
-
-* Specify the model you prefer
+Experiment 1 represents the RAG-only baseline. It can retrieve information from the two Knowledge Collections but does not have access to the movie database or any MCP tools.
 
 
 
-In Collections tab:
-
-* Move the two collections you built on the right panel
-* Click **Save**
+This baseline will make it possible to evaluate what the agent can answer using only unstructured documents.
 
 
 
-You can start the Development Server to test your Experiment 1 (please note you need to click on **Open Chat**). For instance, try ask something like *Ciao, vorrei sviluppare un nuovo film western. Suggeriscimi una trama e analizza quali tematiche e quale periodo di uscita potrebbero contribuire a massimizzarne il ROI.*
+#### 9.1 Create CineAgent
+
+1. In the navigation pane, select **Agents**.
+2. Click **Create an Agent**.
+3. Enter the following information: **Name**: 'CineAgent', **Description**: 'An AI agent specialized in movies of different eras and genres. It uses movie summaries and movie success guidelines to answer questions about films and filmmaking.'
+4. Leave the agent-level **System prompt** empty. The system prompt will be defined at the experiment level so that different prompts and configurations can be evaluated independently.
+5. Leave the **Chat initializer command** empty.
+6. Click **Create**.
 
 
 
-Once you have obtained the answer, click on the **Detail view** button to access the behind the scenes operations. You can see the original position of the chunks the agent retrieved from the RAG systems.
+The new agent is added to the **Agents** view.
+
+**Note**: The initial status of the agent is 'No Champion'. This is expected because no experiment has been evaluated and selected as the champion yet.
 
 
 
-#### Evaluation Tests (agent)
+#### 9.2 Create Experiment 1
 
-Now it is time to evaluate the performance of the agent.
+1. In the **Agents** view, open 'CineAgent'.
+2. Select the **Summary** tab.
+3. Click **Add Agent Experiment**.
+4. On the **Details** tab, enter the following information: **Name**: 'CineAgent Experiment 1 - Collections Only', **Experiment type**: 'Tools-based experiment'
+5. In the **System prompt** field, enter the content of the file 'cineagent\_experiment\_1.txt' stored in the folder retrieval\_settings in the GitHub repository.
+6. Configure the virtual CPU and RAM values required by your SAS Retrieval Agent Manager environment. 
 
-Following the same strategy adopted for the collections, you are going to create a test in the **Evaluation Tests** window.
 
-Test questions are listed in the Excel file named **cineagent\_evaluation.xlsx** available in the *evaluation\_tests* folder inside the GitHub repository.
+
+**Recommendation**: Record the selected CPU and RAM values and use the same values for Experiment 2. This helps ensure that the comparison focuses on the available information sources rather than differences in computing resources.
+
+
+
+##### 9.2.1 Configure the LLM
+
+1. Select the **LLMs** tab.
+2. Select the LLM that CineAgent should use.
+3. Select the retrieval setting to associate with the LLM.
+4. Add the LLM configuration to the experiment. 
+
+
+
+**Recommendation**: Use the same LLM, model parameters, and retrieval setting in Experiment 1 and Experiment 2. The main difference between the experiments should be the availability of the MCP tools.
+
+
+
+##### 9.2.2 Leave the Tools configuration empty
+
+1. Select the **Tools** tab.
+2. Verify that no tools are selected.
+3. Do not add any MCP tools to the experiment.
+
+
+
+This is an important constraint of Experiment 1. CineAgent must answer questions using only information retrieved from the document-based Knowledge Collections. The agent will therefore not be able to query the structured movie database during this experiment.
+
+
+
+##### 9.2.3 Add the Knowledge Collections
+
+1. Select the **Collections** tab.
+2. Leave **Agentic retrieval** disabled.
+3. Select the following Collections: 'Movie Success Guidelines Knowledge' and 'Movie Summaries Knowledge'
+4. Add both Collections to the experiment.
+
+
+
+With agentic retrieval disabled, the experiment searches all the Collections assigned to the selected LLM. This creates a simple and consistent baseline for the first evaluation.
+
+
+
+**Important**: Both Collections must have a champion configuration. The agent uses the champion configurations when retrieving information from the Collections.
+
+
+
+The new experiment appears on the **Summary** tab of 'CineAgent'.
+
+Open 'CineAgent Experiment 1 - Collections Only' and verify the following configuration:
+
+
+
+|**Configuration area**|**Expected value**|
+|-|-|
+|Agent|CineAgent|
+|Experiment|CineAgent Experiment 1 - Collections Only|
+|Experiment type|Tools-based experiment|
+|System prompt|CineAgent Experiment 1 instructions|
+|LLM|The LLM you prefer|
+|Retrieval setting|NA|
+|Tools|No tools assigned|
+|Collections|Movie Success Guidelines Knowledge and Movie Summaries Knowledge|
+|Agentic retrieval|Disabled|
+|Agent status|No Champion. Do not select the experiment as the champion yet.|
+
+
+
+The experiment must first be evaluated using a predefined set of questions. After reviewing the evaluation results, you will select the appropriate experiment as the champion and start the agent.
+
+
+
+##### 9.2.4 What Experiment 1 can answer
+
+Experiment 1 can answer questions whose information is available in: the movie summaries, the movie success guidelines and both document-based knowledge sources.
+
+
+
+For example, it should be able to answer questions such as:
+
+* *Cosa sai del film 8 Mile?*
+* *Quali sono i principali fattori che contribuiscono al successo di un film?*
+* *In base alle linee guida disponibili, quali caratteristiche potrebbero rendere efficace la storia di un film?*
+
+
+
+##### 9.2.5 What Experiment 1 cannot reliably answer
+
+Experiment 1 does not have access to the structured movie database. It might therefore be unable to answer questions that require structured fields, numerical filtering, aggregation, ranking, or comparisons across the complete movie dataset.
+
+
+
+For example:
+
+* *Quali sono i cinque film con il ROI più alto?*
+* *Qual è il ROI medio dei film diretti da Christopher Nolan?*
+* *Quanti film horror sono presenti nel database?*
+* *Quale regista ha diretto il maggior numero di film?*
+
+
+
+If CineAgent cannot find the required information in the assigned Collections, it should clearly explain that the available knowledge is insufficient instead of inventing an answer. These questions will become especially important when comparing Experiment 1 with Experiment 2, which will also have access to the movie database through MCP tools.
+
+
+
+#### 9.3 Expected result
+
+You should now have:
+
+* One agent named 'CineAgent'
+* One experiment named 'CineAgent Experiment 1 - Collections Only'
+* A generic CineAgent system prompt configured at the experiment level
+* One LLM and retrieval setting assigned
+* The two champion Knowledge Collections assigned
+* No MCP tools assigned
+* Agentic retrieval disabled
+* An agent whose current status is 'No Champion'
+
+
+
+CineAgent Experiment 1 is now ready for evaluation.
+
+
+
+
+
+
+
+
+
+
+
+\_\_\_\_
+
+
 
 
 
