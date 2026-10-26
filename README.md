@@ -1,37 +1,18 @@
 # CineAgent
-
 ## Building an AI Agent to Analyze Movies and Create New Movie Stories
 
-
-
-
-
 Welcome to the **SAS Retrieval Agent Manager Hackathon**!
-
 In this challenge, you will build an AI agent with one mission: **understand movies and use that knowledge to help create new ones**.
-
-
 
 Your CineAgent will work with different kinds of movie knowledge. It will explore movie plots and stories, learn the principles behind successful films, and work with structured movie data covering attributes such as titles, genres, directors, and financial performance.
 
-
-
 Throughout this guide, you will build CineAgent **step by step**. You will start by creating and evaluating its document-based knowledge base using **Retrieval-Augmented Generation (RAG)**. Then, you will extend the agent capabilities with **MCP tools**, giving it access to structured movie data and allowing you to explore a richer set of questions and tasks.
-
-
 
 Along the way, you will **experiment, evaluate, and improve** different versions of the agent until you are ready to select your champion.
 
-
-
 By the end of the challenge, CineAgent will not just know about movies. **It will be ready to help you imagine the next one**.
 
-
-
 Are you ready? Let's start!
-
-
-
 
 
 ### 1\. SAS Retrieval Agent Manager
@@ -231,9 +212,7 @@ On the **Basics** tab, enter or select the following values:
 * **Destination**: Select the PostgreSQL vector database destination provided for the hackathon.
 * **Configuration update strategy**: Select 'Append and sync'.
 
-
-
-> If you plan to submit queries in multiple languages, select a multilingual embedding model.
+If you plan to submit queries in multiple languages, select a multilingual embedding model.
 
 
 
