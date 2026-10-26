@@ -3,6 +3,9 @@
 ## Build an AI Agent to Analyze Movies and Create New Stories
 
 Welcome to the **SAS Retrieval Agent Manager Hackathon**!
+This GitHub repository contains reusable resources for building, evaluating, and extending AI agents with **SAS Retrieval Agent Manager**.
+![Version](https://img.shields.io/badge/version-v1.0.0-blue) ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
+
 
 In this challenge, you will build **CineAgent**, an AI agent that understands movies and helps create new ones. CineAgent will work with:
 
@@ -19,7 +22,6 @@ You will build CineAgent step by step:
 
 By the end, CineAgent will not only know about movies; it will help you imagine the next one.
 
-This GitHub repository contains reusable resources for building, evaluating, and extending AI agents with **SAS Retrieval Agent Manager**.
 
 This repository includes:
 
@@ -40,6 +42,13 @@ This repository includes:
 | `retrieval_settings/` | System prompt templates for retrieval settings and agent experiments |
 | `evaluation_tests/` | Evaluation questions, metrics, and expected conditions |
 | `code_templates/` | MCP server and custom agent templates |
+
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
+
+See [NOTICE](NOTICE) for attribution and third-party material information.
 
 ---
 
