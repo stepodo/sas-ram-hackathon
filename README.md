@@ -34,7 +34,7 @@ Are you ready? Let's start!
 
 
 
-### 1. SAS Retrieval Agent Manager
+### 1\. SAS Retrieval Agent Manager
 
 
 
@@ -104,10 +104,7 @@ For this challenge, we will keep the two types of knowledge separate by creating
 
 1. In the navigation pane, select **Sources**.
 2. Select **Local Files**.
-3. Enter the following name and description:
-
-   1. **Name** 'Movie Summaries'
-   2. **Description** 'Movie plot summaries used to answer questions about movie stories, characters, and themes.'
+3. Enter the following name and description: **Name** 'Movie Summaries', **Description** 'Movie plot summaries used to answer questions about movie stories, characters, and themes.'
 4. Select **Browse files** and load the 'movies\_summary.pdf' file
 5. Select **Save**
 6. Create another source by selecting **Local Files**
@@ -172,10 +169,7 @@ Each Collection will use one of the Sources created in the previous section.
 
 1. In the navigation pane, select **Collections**.
 2. Click **New Collection**.
-3. Enter the following information:
-
-   1. **Name**: 'Movie Summaries Knowledge'
-   2. **Description**: 'A RAG Collection containing movie titles and plot summaries. Each movie entry includes a movie ID, title, and summary.'
+3. Enter the following information: **Name**: 'Movie Summaries Knowledge', **Description**: 'A RAG Collection containing movie titles and plot summaries. Each movie entry includes a movie ID, title, and summary.'
 4. Select the 'Movie Summaries' Source.
 5. Click **Save**.
 
@@ -185,10 +179,7 @@ Each Collection will use one of the Sources created in the previous section.
 
 1. Return to the Collections view.
 2. Click **New Collection**.
-3. Enter the following information:
-
-   1. **Name**: 'Movie Success Guidelines Knowledge'
-   2. **Description**: 'A RAG Collection containing guidelines for developing and evaluating a successful movie.'
+3. Enter the following information: **Name**: 'Movie Success Guidelines Knowledge', **Description**: 'A RAG Collection containing guidelines for developing and evaluating a successful movie.'
 4. Select the 'Movie Success Guidelines' Source.
 5. Click **Save**.
 
@@ -219,7 +210,7 @@ You will create multiple configurations with different chunk size and chunk over
 
 
 
-> \*\*Important\*\*: You cannot edit a configuration after saving it. To test different values, create a new configuration or copy an existing one.
+**Important**: You cannot edit a configuration after saving it. To test different values, create a new configuration or copy an existing one.
 
 
 
@@ -493,11 +484,7 @@ In SAS Retrieval Agent Manager, these questions and expected results are impleme
 
 1. In the navigation pane, select **User Eval Tests**.
 2. Click **New**.
-3. Enter the following information:
-
-   1. **Name**: 'Movie Guidelines Evaluation'
-   2. **Description**: 'Evaluates responses generated from the Movie Success Guidelines Knowledge Collection.'
-   3. **Passing Threshold**: '100'
+3. Enter the following information: **Name**: 'Movie Guidelines Evaluation', **Description**: 'Evaluates responses generated from the Movie Success Guidelines Knowledge Collection', **Passing Threshold**: '100'
 4. Click **OK** to create the test.
 
 
@@ -533,11 +520,7 @@ In SAS Retrieval Agent Manager, these questions and expected results are impleme
 
 1. Return to the **User Eval Tests** view.
 2. Click **New**.
-3. Enter the following information:
-
-   1. **Name**: 'Movie Summaries Evaluation'
-   2. **Description**: 'Evaluates responses generated from the Movie Summaries Knowledge Collection.'
-   3. **Passing Threshold**: '100'
+3. Enter the following information: **Name**: 'Movie Summaries Evaluation', **Description**: 'Evaluates responses generated from the Movie Summaries Knowledge Collection', **Passing Threshold**: '100'
 4. Click **OK** to create the test.
 5. In the GitHub repository, open the 'evaluation\_tests' folder.
 6. Download and open 'movie\_summary\_evaluation.xlsx'.
@@ -831,7 +814,7 @@ The new agent is added to the **Agents** view.
 3. Click **Add Agent Experiment**.
 4. On the **Details** tab, enter the following information: **Name**: 'CineAgent Experiment 1 - Collections Only', **Experiment type**: 'Tools-based experiment'
 5. In the **System prompt** field, enter the content of the file 'cineagent\_experiment\_1.txt' stored in the folder retrieval\_settings in the GitHub repository.
-6. Configure the virtual CPU and RAM values required by your SAS Retrieval Agent Manager environment. 
+6. Configure the virtual CPU and RAM values required by your SAS Retrieval Agent Manager environment.
 
 
 
@@ -844,7 +827,7 @@ The new agent is added to the **Agents** view.
 1. Select the **LLMs** tab.
 2. Select the LLM that CineAgent should use.
 3. Select the retrieval setting to associate with the LLM.
-4. Add the LLM configuration to the experiment. 
+4. Add the LLM configuration to the experiment.
 
 
 
@@ -1236,7 +1219,7 @@ Experiment 2 can use the MCP tools to generate the chart data and image. However
 
 
 
-'CineAgent Experiment 3 - Template-Based Visual Output' extends Experiment 2 with a custom agent template that can display generated charts directly in the response. 
+'CineAgent Experiment 3 - Template-Based Visual Output' extends Experiment 2 with a custom agent template that can display generated charts directly in the response.
 
 
 
@@ -1259,7 +1242,7 @@ Experiment 2 can use the MCP tools to generate the chart data and image. However
 
 #### 13.1 Test CineAgent Experiment 3
 
-Use the **Development Server** to test 'CineAgent Experiment 3 - Template-Based Visual Output'. 
+Use the **Development Server** to test 'CineAgent Experiment 3 - Template-Based Visual Output'.
 
 Submit the chart request again: *Visualizza in un grafico la relazione tra il logaritmo del budget e il logaritmo delle revenue*.
 
@@ -1309,7 +1292,7 @@ The running champion experiment can then be used from the **Agent** tab in the C
 
 
 
-### Congratulations!
+### 15\. Congratulations!
 
 #### Congratulations! You have successfully completed the CineAgent challenge.
 
