@@ -3,7 +3,9 @@
 ## Build an AI Agent to Analyze Movies and Create New Stories
 
 Welcome to the **SAS Retrieval Agent Manager Hackathon**!
+
 This GitHub repository contains reusable resources for building, evaluating, and extending AI agents with **SAS Retrieval Agent Manager**.
+
 ![Version](https://img.shields.io/badge/version-v1.0.0-blue) ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
 
