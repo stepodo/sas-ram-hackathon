@@ -1,5 +1,8 @@
 # CineAgent
+
 ## Building an AI Agent to Analyze Movies and Create New Movie Stories
+
+
 
 Welcome to the **SAS Retrieval Agent Manager Hackathon**!
 In this challenge, you will build an AI agent with one mission: **understand movies and use that knowledge to help create new ones**.
@@ -13,6 +16,9 @@ Along the way, you will **experiment, evaluate, and improve** different versions
 By the end of the challenge, CineAgent will not just know about movies. **It will be ready to help you imagine the next one**.
 
 Are you ready? Let's start!
+
+
+
 
 
 ### 1\. SAS Retrieval Agent Manager
@@ -89,10 +95,7 @@ For this challenge, we will keep the two types of knowledge separate by creating
 4. Select **Browse files** and load the 'movies\_summary.pdf' file
 5. Select **Save**
 6. Create another source by selecting **Local Files**
-7. Enter the following name and description:
-
-   1. **Name** 'Movie Success Guidelines'
-   2. **Description** 'Guidelines for developing and evaluating a successful movie, including storytelling, audience, production, financial considerations, marketing, and distribution.'
+7. Enter the following name and description: **Name** 'Movie Success Guidelines', **Description** 'Guidelines for developing and evaluating a successful movie, including storytelling, audience, production, financial considerations, marketing, and distribution.'
 8. Select **Browse files** and load the 'movies\_success\_guidelines.txt' file
 9. Select **Save**
 
@@ -119,7 +122,7 @@ The **Sources** view should now contain:
 
 You are now ready to create a separate Collection for each Source.
 
-
+\_\_\_
 
 
 
