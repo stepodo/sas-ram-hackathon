@@ -6,7 +6,7 @@ Welcome to the **SAS Retrieval Agent Manager Hackathon**!
 
 This GitHub repository contains reusable resources for building, evaluating, and extending AI agents with **SAS Retrieval Agent Manager**.
 
-!\[Version](https://img.shields.io/badge/version-v1.0.0-blue) !\[License](https://img.shields.io/badge/license-Apache%202.0-blue)
+![Version](https://img.shields.io/badge/version-v1.0.0-blue) ![License](https://img.shields.io/badge/license-Apache%202.0-blue)
 
 
 
@@ -95,8 +95,8 @@ In the repository’s `documents` folder, download:
 
 |File|Content|
 |-|-|
-|`movies\\\_summary.pdf`|Movie IDs, titles, and plot summaries|
-|`movies\\\_success\\\_guidelines.txt`|Guidelines on storytelling, audience, production, economics, marketing, and distribution|
+|`movies_summary.pdf`|Movie IDs, titles, and plot summaries|
+|`movies_success_guidelines.txt`|Guidelines on storytelling, audience, production, economics, marketing, and distribution|
 
 Create **two separate Sources**:
 
@@ -107,7 +107,7 @@ Create **two separate Sources**:
 
    * **Name**: `Movie Summaries`
    * **Description**: `Movie plot summaries used to answer questions about movie stories, characters, and themes.`
-3. Upload `movies\\\_summary.pdf`.
+3. Upload `movies_summary.pdf`.
 4. Select **Save**.
 
 ### Movie Success Guidelines
@@ -117,7 +117,7 @@ Create **two separate Sources**:
 
    * **Name**: `Movie Success Guidelines`
    * **Description**: `Guidelines for developing and evaluating a successful movie, including storytelling, audience, production, financial considerations, marketing, and distribution.`
-3. Upload `movies\\\_success\\\_guidelines.txt`.
+3. Upload `movies_success_guidelines.txt`.
 4. Select **Save**.
 
 > **Why two Sources?**  
@@ -125,8 +125,8 @@ Create **two separate Sources**:
 
 ### Checklist
 
-* \[ ] `Movie Summaries` contains `movies\\\_summary.pdf`
-* \[ ] `Movie Success Guidelines` contains `movies\\\_success\\\_guidelines.txt`
+* [ ] `Movie Summaries` contains `movies_summary.pdf`
+* [ ] `Movie Success Guidelines` contains `movies_success_guidelines.txt`
 
 ---
 
@@ -221,9 +221,9 @@ For every configuration:
 
 ### Checklist
 
-* \[ ] At least three configurations per Collection
-* \[ ] Different chunk size and overlap values across configurations
-* \[ ] Every vectorization job completed successfully
+* [ ] At least three configurations per Collection
+* [ ] Different chunk size and overlap values across configurations
+* [ ] Every vectorization job completed successfully
 
 ---
 
@@ -235,8 +235,8 @@ Create two custom retrieval settings:
 
 |Retrieval setting|Prompt file|
 |-|-|
-|`Movie Guidelines Retrieval Setting`|`retrieval\\\_settings/movie\\\_guideline\\\_collection.txt`|
-|`Movie Summaries Retrieval Setting`|`retrieval\\\_settings/movie\\\_summary\\\_collection.txt`|
+|`Movie Guidelines Retrieval Setting`|`retrieval_settings/movie_guideline_collection.txt`|
+|`Movie Summaries Retrieval Setting`|`retrieval_settings/movie_summary_collection.txt`|
 
 > **Important**  
 > The system prompt template must include the `{context}` variable. SAS Retrieval Agent Manager replaces it with the content retrieved from the Collection.
@@ -245,7 +245,7 @@ Create two custom retrieval settings:
 
 1. Go to **Retrieval Settings** → **New**.
 2. Enter **Name**: `Movie Guidelines Retrieval Setting`.
-3. Open `retrieval\\\_settings/movie\\\_guideline\\\_collection.txt`.
+3. Open `retrieval_settings/movie_guideline_collection.txt`.
 4. Copy its full content into **System prompt template**.
 5. Verify that `{context}` is present.
 6. Leave other parameters unchanged.
@@ -255,7 +255,7 @@ Create two custom retrieval settings:
 
 1. Go to **Retrieval Settings** → **New**.
 2. Enter **Name**: `Movie Summaries Retrieval Setting`.
-3. Open `retrieval\\\_settings/movie\\\_summary\\\_collection.txt`.
+3. Open `retrieval_settings/movie_summary_collection.txt`.
 4. Copy its full content into **System prompt template**.
 5. Verify that `{context}` is present.
 6. Leave other parameters unchanged.
@@ -290,9 +290,9 @@ Creating a retrieval setting does not automatically associate it with a Collecti
 
 ### Checklist
 
-* \[ ] Each Collection has at least one configured LLM
-* \[ ] The correct retrieval setting is assigned to each LLM
-* \[ ] An Eval LLM is selected for both Collections
+* [ ] Each Collection has at least one configured LLM
+* [ ] The correct retrieval setting is assigned to each LLM
+* [ ] An Eval LLM is selected for both Collections
 
 ---
 
@@ -304,8 +304,8 @@ The repository provides:
 
 |Evaluation file|Collection|
 |-|-|
-|`evaluation\\\_tests/movie\\\_guidelines\\\_evaluation.json`|`Movie Success Guidelines Knowledge`|
-|`evaluation\\\_tests/movie\\\_summary\\\_evaluation.json`|`Movie Summaries Knowledge`|
+|`evaluation_tests/movie_guidelines_evaluation.json`|`Movie Success Guidelines Knowledge`|
+|`evaluation_tests/movie_summary_evaluation.json`|`Movie Summaries Knowledge`|
 
 Each JSON key contains:
 
@@ -374,9 +374,9 @@ Configuration statuses:
 
 ### Checklist
 
-* \[ ] Two reusable User Eval Tests created
-* \[ ] Evaluations completed for both Collections
-* \[ ] One champion configuration selected per Collection
+* [ ] Two reusable User Eval Tests created
+* [ ] Evaluations completed for both Collections
+* [ ] One champion configuration selected per Collection
 
 ---
 
@@ -630,7 +630,7 @@ The Movie Database MCP Server provides **25 tools** for searching, filtering, ag
 |Financial metrics and statistical comparisons|MCP tools|
 |Trends and charts|MCP tools|
 
-\---
+---
 
 ## 12\. Create Experiment 2
 
