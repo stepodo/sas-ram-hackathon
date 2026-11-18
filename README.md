@@ -453,7 +453,7 @@ Experiment 1 is the **RAG-only baseline**: CineAgent can use both Knowledge Coll
 
    * **Name**: `CineAgent Experiment 1 - Collections Only`
    * **Experiment type**: `Tools-based experiment`
-   * **System prompt**: copy the content of `retrieval\\\_settings/cineagent\\\_experiment\\\_1.txt`
+   * **System prompt**: copy the content of `retrieval_settings/cineagent_experiment_1.txt`
 4. Configure the CPU and RAM required by your environment.
 
 > **Recommendation**  
@@ -572,7 +572,7 @@ The Movie Database MCP Server provides **25 tools** for searching, filtering, ag
 
 ### Create the MCP template
 
-1. In the repository, open `code\\\_templates/code\\\_mcp\\\_server`.
+1. In the repository, open `code_templates/code_mcp_server`.
 2. Download:
 
    * `run.py`
