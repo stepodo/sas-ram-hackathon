@@ -612,13 +612,13 @@ The Movie Database MCP Server provides **25 tools** for searching, filtering, ag
 
 |Capability|Example tools|Purpose|
 |-|-|-|
-|Dataset discovery and retrieval|`get\\\_dataset\\\_schema`, `search\\\_movies`, `get\\\_movie`, `filter\\\_movies`, `rank\\\_movies`|Explore the database and retrieve movie records|
-|Aggregation and comparison|`aggregate\\\_movies`, `compare\\\_segments`, `analyze\\\_release\\\_timing`, `analyze\\\_trends`|Calculate metrics and compare categories or periods|
-|Statistical exploration|`describe\\\_metrics`, `correlation\\\_analysis`, `detect\\\_outliers`, `distribution\\\_analysis`|Analyze distributions, correlations, and outliers|
-|Financial performance|`analyze\\\_profitability`, `find\\\_sleeper\\\_hits`, `find\\\_box\\\_office\\\_bombs`|Analyze budgets, revenue, profit, ROI, and outcomes|
-|Talent and market analysis|`analyze\\\_talent`, `analyze\\\_companies`, `analyze\\\_genres`, `analyze\\\_countries`|Compare directors, writers, stars, companies, genres, and countries|
-|Data quality|`data\\\_quality\\\_report`, `missing\\\_data\\\_analysis`|Identify missing values, duplicates, and invalid numeric values|
-|Visualization and routing|`create\\\_chart`, `answer\\\_movie\\\_analysis`|Produce chart data or select an appropriate analytical tool|
+|Dataset discovery and retrieval|`get_dataset_schema`, `search_movies`, `get_movie`, `filter_movies`, `rank_movies`|Explore the database and retrieve movie records|
+|Aggregation and comparison|`aggregate_movies`, `compare_segments`, `analyze_release_timing`, `analyze_trends`|Calculate metrics and compare categories or periods|
+|Statistical exploration|`describe_metrics`, `correlation_analysis`, `detect_outliers`, `distribution_analysis`|Analyze distributions, correlations, and outliers|
+|Financial performance|`analyze_profitability`, `find_sleeper_hits`, `find_box_office_bombs`|Analyze budgets, revenue, profit, ROI, and outcomes|
+|Talent and market analysis|`analyze_talent`, `analyze_companies`, `analyze_genres`, `analyze_countries`|Compare directors, writers, stars, companies, genres, and countries|
+|Data quality|`data_quality_report`, `missing_data_analysis`|Identify missing values, duplicates, and invalid numeric values|
+|Visualization and routing|`create_chart`, `answer_movie_analysis`|Produce chart data or select an appropriate analytical tool|
 
 ### When to use Collections vs. MCP tools
 
@@ -642,7 +642,7 @@ The Movie Database MCP Server provides **25 tools** for searching, filtering, ag
 
    * **Name**: `CineAgent Experiment 2 - Collections and MCP Tools`
    * **Experiment type**: `Tools-based experiment`
-   * **System prompt**: copy `retrieval\\\_settings/cineagent\\\_experiment\\\_2.txt`
+   * **System prompt**: copy `retrieval_settings/cineagent_experiment_2.txt`
 4. Use the same LLM as Experiment 1.
 5. Add all tools from `Movie Database MCP Server`.
 6. Add both Knowledge Collections.
