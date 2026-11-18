@@ -45,9 +45,9 @@ This repository includes:
 |Folder|Purpose|
 |-|-|
 |`documents/`|Source documents for RAG Collections|
-|`retrieval\\\_settings/`|System prompt templates for retrieval settings and agent experiments|
-|`evaluation\\\_tests/`|Evaluation questions, metrics, and expected conditions|
-|`code\\\_templates/`|MCP server and custom agent templates|
+|`retrieval_settings/`|System prompt templates for retrieval settings and agent experiments|
+|`evaluation_tests/`|Evaluation questions, metrics, and expected conditions|
+|`code_templates/`|MCP server and custom agent templates|
 
 
 
