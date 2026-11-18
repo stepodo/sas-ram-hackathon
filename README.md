@@ -85,7 +85,7 @@ SAS Retrieval Agent Manager provides the environment to:
 * [SAS Help Center](https://go.documentation.sas.com/doc/en/ragntmgrcdc/v_013/ragntmgrug/titlepage.htm?fromDefault=)
 * [SAS Learning Portal](https://learn.sas.com/)
 
-\---
+---
 
 ## 2\. Create the Sources
 
@@ -120,7 +120,7 @@ Create **two separate Sources**:
 3. Upload `movies\\\_success\\\_guidelines.txt`.
 4. Select **Save**.
 
-> \\\*\\\*Why two Sources?\\\*\\\*  
+> **Why two Sources?**  
 > Separate Sources let you create, configure, and evaluate independent RAG Collections. This makes it easier to test different chunking and retrieval strategies for each type of content.
 
 ### Checklist
@@ -128,7 +128,7 @@ Create **two separate Sources**:
 * \[ ] `Movie Summaries` contains `movies\\\_summary.pdf`
 * \[ ] `Movie Success Guidelines` contains `movies\\\_success\\\_guidelines.txt`
 
-\---
+---
 
 ## 3\. Create the Collections
 
@@ -166,13 +166,13 @@ Create the following Collections:
 * \[ ] Both Collections are created
 * \[ ] Each Collection is linked to the correct Source
 
-\---
+---
 
 ## 4\. Configure and Vectorize the Collections
 
 A **configuration** defines how documents are chunked, embedded, stored, and retrieved.
 
-> \\\*\\\*Important\\\*\\\*  
+> **Important**  
 > You cannot edit a configuration after saving it. To test different values, create a new configuration or copy an existing one.
 
 ### Create configurations
@@ -225,7 +225,7 @@ For every configuration:
 * \[ ] Different chunk size and overlap values across configurations
 * \[ ] Every vectorization job completed successfully
 
-\---
+---
 
 ## 5\. Create Retrieval Settings
 
@@ -238,7 +238,7 @@ Create two custom retrieval settings:
 |`Movie Guidelines Retrieval Setting`|`retrieval\\\_settings/movie\\\_guideline\\\_collection.txt`|
 |`Movie Summaries Retrieval Setting`|`retrieval\\\_settings/movie\\\_summary\\\_collection.txt`|
 
-> \\\*\\\*Important\\\*\\\*  
+> **Important**  
 > The system prompt template must include the `{context}` variable. SAS Retrieval Agent Manager replaces it with the content retrieved from the Collection.
 
 ### Movie Guidelines Retrieval Setting
@@ -261,7 +261,7 @@ Create two custom retrieval settings:
 6. Leave other parameters unchanged.
 7. Select **OK**.
 
-\---
+---
 
 ## 6\. Assign Retrieval Settings to Collections
 
@@ -285,7 +285,7 @@ Creating a retrieval setting does not automatically associate it with a Collecti
 5. In **User Eval**, select the **Eval LLM**.
 6. Select **Save**.
 
-> \\\*\\\*Tip\\\*\\\*  
+> **Tip**  
 > You can use different LLMs for the Collections.
 
 ### Checklist
@@ -294,7 +294,7 @@ Creating a retrieval setting does not automatically associate it with a Collecti
 * \[ ] The correct retrieval setting is assigned to each LLM
 * \[ ] An Eval LLM is selected for both Collections
 
-\---
+---
 
 ## 7\. Evaluate Collection Configurations
 
@@ -335,7 +335,7 @@ For each JSON key:
 4. For additional `Metric n` / `Condition n` pairs, select **New assertion** and repeat.
 5. Save the test prompt.
 
-> \\\*\\\*Important\\\*\\\*  
+> **Important**  
 > Preserve the order, spelling, metrics, and expected values exactly as provided. Do not translate or rewrite them.
 
 ### Run evaluations
@@ -369,7 +369,7 @@ Configuration statuses:
 |`Challenger`|Configuration being tested as an alternative|
 |`Champion`|Primary configuration used by agents and end users|
 
-> \\\*\\\*Important\\\*\\\*  
+> **Important**  
 > Each Collection must have a champion configuration before CineAgent can use it.
 
 ### Checklist
@@ -378,7 +378,7 @@ Configuration statuses:
 * \[ ] Evaluations completed for both Collections
 * \[ ] One champion configuration selected per Collection
 
-\---
+---
 
 ## 8\. Test the Collections in Chat
 
@@ -403,7 +403,7 @@ Before creating CineAgent, test each Collection’s champion configuration in th
 
 > Ciao, cosa sai del film 8 Mile?
 
-> \\\*\\\*Note\\\*\\\*  
+> **Note**  
 > The example questions are in Italian to help test multilingual retrieval and generation.
 
 ### Inspect responses
@@ -424,10 +424,10 @@ Ask yourself:
 * Is important context missing?
 * Does the system avoid unsupported information?
 
-> \\\*\\\*Collection chat vs. agent\\\*\\\*  
+> **Collection chat vs. agent**  
 > At this stage, you are testing a single RAG Collection directly. CineAgent will later combine both Collections, agent instructions, and MCP tools.
 
-\---
+---
 
 ## 9\. Create CineAgent and Experiment 1
 
@@ -456,7 +456,7 @@ Experiment 1 is the **RAG-only baseline**: CineAgent can use both Knowledge Coll
    * **System prompt**: copy the content of `retrieval\\\_settings/cineagent\\\_experiment\\\_1.txt`
 4. Configure the CPU and RAM required by your environment.
 
-> \\\*\\\*Recommendation\\\*\\\*  
+> **Recommendation**  
 > Use the same CPU and RAM values for Experiment 2 so that performance differences reflect available information sources, not compute resources.
 
 ### Configure the LLM
@@ -518,7 +518,7 @@ It does not have access to the structured movie database, so it may struggle wit
 
 If the required information is unavailable, CineAgent should clearly state that its knowledge is insufficient rather than inventing an answer.
 
-\---
+---
 
 ## 10\. Evaluate Experiment 1
 
@@ -561,10 +561,10 @@ Review:
 * Response cost.
 * Incorrect or unsupported answers.
 
-> \\\*\\\*Note\\\*\\\*  
+> **Note**  
 > Do not select Experiment 1 as champion yet. Compare it with Experiment 2 after deploying the MCP tools.
 
-\---
+---
 
 ## 11\. Deploy the Movie Database MCP Server
 
@@ -587,7 +587,7 @@ The Movie Database MCP Server provides **25 tools** for searching, filtering, ag
 6. Select **OK**.
 7. Remember to **Publish** the code to use it in the subsequent step (click on the icon available at the top right of the window)
 
-> \\\*\\\*Important\\\*\\\*  
+> **Important**  
 > Copy the code, dependencies, and environment-variable names exactly as provided. Do not rename the MCP tools: their names and descriptions help CineAgent choose the right operation.
 
 ### Create and start the server
@@ -605,7 +605,7 @@ The Movie Database MCP Server provides **25 tools** for searching, filtering, ag
 8. Start the server.
 9. Wait until it is running and reachable.
 
-> \\\*\\\*Important\\\*\\\*  
+> **Important**  
 > The MCP server must remain running while CineAgent uses its tools.
 
 ### Available tool capabilities
@@ -687,7 +687,7 @@ Experiment 2 can generate chart data and images through MCP tools, but its stand
 7. Select **Save**.
 8. Remember to **Publish** the code to use it in the subsequent step (click on the icon available at the top right of the window)
 
-\---
+---
 
 ## 13\. Create Experiment 3
 
@@ -716,7 +716,7 @@ Verify that the experiment:
 * Receives the generated chart.
 * Displays the image in the chat response.
 
-\---
+---
 
 ## 14\. Compare the Experiments
 
@@ -736,7 +736,7 @@ After reviewing scores and manual tests:
 
 You can then use the running champion from the **Agent** tab in Chat.
 
-\---
+---
 
 ## 15\. Congratulations!
 
