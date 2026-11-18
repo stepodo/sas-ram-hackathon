@@ -36,7 +36,7 @@ This repository includes:
 * Reference implementation of **CineAgent**
 * Supporting SAS programs and documentation
 
-> \\\*\\\*Note:\\\*\\\* SAS RAM refers to SAS Retrieval Agent Manager.
+> **Note:** SAS RAM refers to SAS Retrieval Agent Manager.
 
 
 
