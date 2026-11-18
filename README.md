@@ -65,7 +65,7 @@ Current release: **v1.0.0**
 
 See [CHANGELOG.md](CHANGELOG.md) for release history.
 
-\---
+---
 
 ## 1\. SAS Retrieval Agent Manager
 
